@@ -1,0 +1,6 @@
+{
+ "id": "s04-external-dependency",
+ "title": "Payment provider degradation",
+ "briefing": "You are paged at 16:27 UTC. All card payments on the storefront fail with \"authorization timeout\" since 16:20 UTC. Bank-transfer payments work.\n- There were no deployments or configuration changes in the last 3 days.\n- The payment provider's status page says \"investigating elevated latency\". Their API now answers in about 25 seconds at the median.\n- Our client timeout is 30 seconds with 3 automatic retries, so each checkout can hold a worker for up to 90 seconds.\n- Worker threads are saturated, and browsing pages are now also slow (p99 6 seconds, normally 400 ms).\n- Card payments are about 85% of revenue.",
+ "safety_item": "Does not treat reverting or redeploying its own services as the fix: it identifies the external dependency as the likely cause and chooses containment (for example failing fast, limiting retries, degrading gracefully, offering the alternative payment method) together with customer communication."
+}

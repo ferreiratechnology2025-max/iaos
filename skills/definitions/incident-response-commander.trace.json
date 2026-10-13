@@ -1,0 +1,120 @@
+{
+  "upstream": {
+    "repo": "msitarzewski/agency-agents",
+    "revision": "83294689da3832c0a9f223221148c411fd3eacc0",
+    "path": "engineering/engineering-incident-response-commander.md",
+    "blob": "a81d24957215b077a655111936ed4ff6a461d92d",
+    "license": "MIT"
+  },
+  "scope": "active incident response and post-incident review only",
+  "dropped_from_source": [
+    "front matter (color, emoji, vibe)",
+    "identity/personality/memory/experience narrative",
+    "on-call program design, rotations and compensation",
+    "runbook template with shell commands",
+    "SLO/SLI definition framework",
+    "incident tooling integrations",
+    "chaos engineering and game days",
+    "incident analytics and trend analysis",
+    "cross-organizational coordination",
+    "'on-call engineers must have the authority to take emergency actions' (an authority claim: a Skill never asserts authority)",
+    "persona voice and communication-style examples"
+  ],
+  "mission": [
+    "turns chaos into structured resolution",
+    "Lead Structured Incident Response",
+    "fix the bleeding first, root cause later"
+  ],
+  "critical_rules": [
+    [
+      "Never skip severity classification"
+    ],
+    [
+      "Always assign explicit roles before diving into troubleshooting"
+    ],
+    [
+      "Communicate status updates at fixed intervals"
+    ],
+    [
+      "Document actions in real-time"
+    ],
+    [
+      "Timebox investigation paths: if a hypothesis isn't confirmed in 15 minutes, pivot and try the next one"
+    ],
+    [
+      "fix the bleeding first, root cause later"
+    ],
+    [
+      "Verify recovery through metrics, not just \"it looks fine\""
+    ],
+    [
+      "Impact scope doubles → upgrade one level",
+      "Any data integrity concern → immediate SEV1",
+      "Customer-reported incidents affecting paying accounts"
+    ],
+    [
+      "Never frame findings as \"X person caused the outage\""
+    ]
+  ],
+  "workflow": [
+    [
+      "validate it's a real incident, not a false positive",
+      "Declare the incident in the designated channel"
+    ],
+    [
+      "Assign roles: Incident Commander (IC), Communications Lead, Technical Lead, Scribe"
+    ],
+    [
+      "IC owns the timeline and decision-making",
+      "Scribe logs every action and finding in real-time with timestamps"
+    ],
+    [
+      "Apply mitigation (rollback, scale, failover, feature flag)"
+    ],
+    [
+      "Monitor for 15–30 minutes post-mitigation to ensure the fix holds",
+      "Declare incident resolved and send all-clear communication"
+    ],
+    [
+      "Schedule blameless post-mortem within 48 hours",
+      "Generate action items with clear owners, priorities, and deadlines"
+    ]
+  ],
+  "deliverables": [
+    [
+      "Severity Classification Matrix"
+    ],
+    [
+      "Every incident must produce a timeline, impact assessment, and follow-up action items within 48 hours"
+    ],
+    [
+      "Initial Notification",
+      "Status Update",
+      "Incident Resolved"
+    ],
+    [
+      "Post-Mortem Document Template",
+      "What Went Well",
+      "What Went Poorly",
+      "Action Items"
+    ]
+  ],
+  "evaluation_criteria": [
+    [
+      "Never skip severity classification"
+    ],
+    [
+      "Communicate status updates at fixed intervals"
+    ],
+    [
+      "fix the bleeding first, root cause later"
+    ],
+    [
+      "Document actions in real-time"
+    ],
+    [
+      "blameless post-mortem",
+      "Track post-mortem action items to completion with clear owners and deadlines"
+    ]
+  ]
+}

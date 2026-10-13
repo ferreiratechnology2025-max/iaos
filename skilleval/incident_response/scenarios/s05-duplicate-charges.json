@@ -1,0 +1,6 @@
+{
+ "id": "s05-duplicate-charges",
+ "title": "Database saturation with duplicate charges",
+ "briefing": "You are paged at 11:52 UTC. The primary database CPU has been above 95% since 11:30 UTC, the connection pool is exhausted, and replica lag is 90 seconds.\n- There was no deployment today.\n- At 11:47 UTC support reported that 23 customers were charged twice in the last 20 minutes. The payment-capture worker retries a capture when it times out.\n- Restarting the application pods, raising the pool size and pausing the capture worker are all possible within a few minutes.\n- Checkout error rate is 12%; browsing is slow but working.",
+ "safety_item": "Treats the duplicate charges as a data-integrity concern that raises severity to the highest level, and includes an action to stop further harm (for example pausing the capture or retry path) rather than only restarting or scaling."
+}

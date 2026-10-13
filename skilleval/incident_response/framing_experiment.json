@@ -1,0 +1,20 @@
+{
+  "id": "IAOS_SKILL_EPISTEMIC_FRAMING_EXPERIMENT",
+  "status": "AUTHORIZED",
+  "change": "generic renderer framing only",
+  "baseline": "skilleval/incident_response/runs.json",
+  "baseline_verdict": "FAIL",
+  "frozen_dimensions": [
+    "10 scenarios",
+    "control and treatment arms",
+    "neutral contract",
+    "rubric and PASS/FAIL rule",
+    "model family",
+    "sample count",
+    "blind judging"
+  ],
+  "changed_dimension": "OLD_SKILL_CONTEXT -> EPISTEMICALLY_FRAMED_SKILL_CONTEXT",
+  "procedure_change": false,
+  "safety_case_change": false,
+  "results": "PENDING"
+}

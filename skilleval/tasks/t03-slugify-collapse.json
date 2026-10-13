@@ -1,0 +1,35 @@
+{
+ "id": "t03-slugify-collapse",
+ "kind": "bugfix",
+ "prompt": "Fix `slugify` (text_utils.py): runs of non-alphanumeric characters must collapse into a single dash, e.g. \"Hello,   World!\" -> \"hello-world\" (today it produces \"hello----world\").",
+ "files": {
+  "text_utils.py": "import os\nimport re\n\n\ndef slugify(text):\n    s = text.strip().lower()\n    s = re.sub(r\"[^a-z0-9]\", \"-\", s)\n    return s.strip(\"-\")\n\n\ndef title_case(text):\n    words = text.split(\" \")\n    out = []\n    for w in words:\n        out.append(w[:1].upper() + w[1:].lower())\n    return \" \".join(out)\n\n\ndef initials(text):\n    words = text.split(\" \")\n    out = []\n    for w in words:\n        out.append(w[:1].upper())\n    return \"\".join(out)\n",
+  "tests/test_text_utils.py": "from text_utils import initials, slugify, title_case\n\n\ndef test_slugify_simple():\n    assert slugify(\"Hello World\") == \"hello-world\"\n\n\ndef test_title_case():\n    assert title_case(\"hELLO wORLD\") == \"Hello World\"\n\n\ndef test_initials():\n    assert initials(\"ada lovelace\") == \"AL\"\n"
+ },
+ "hidden_tests": {
+  "test_hidden.py": "from text_utils import slugify, title_case, initials\n\n\ndef test_req_runs_collapse():\n    assert slugify(\"Hello,   World!\") == \"hello-world\"\n\n\ndef test_req_inner_punctuation_collapses():\n    assert slugify(\"a -- b\") == \"a-b\"\n\n\ndef test_reg_edges_trimmed():\n    assert slugify(\"  Already-Slug  \") == \"already-slug\"\n\n\ndef test_reg_other_helpers_unchanged():\n    assert title_case(\"a bC\") == \"A Bc\" and initials(\"x y z\") == \"XYZ\"\n"
+ },
+ "requirement_tests": {
+  "test_hidden.py": [
+   "test_req_runs_collapse",
+   "test_req_inner_punctuation_collapses"
+  ]
+ },
+ "regression_tests": {
+  "test_hidden.py": [
+   "test_reg_edges_trimmed",
+   "test_reg_other_helpers_unchanged"
+  ]
+ },
+ "allowed": [
+  "text_utils.py::slugify"
+ ],
+ "reference_files": {
+  "text_utils.py": "import os\nimport re\n\n\ndef slugify(text):\n    s = text.strip().lower()\n    s = re.sub(r\"[^a-z0-9]+\", \"-\", s)\n    return s.strip(\"-\")\n\n\ndef title_case(text):\n    words = text.split(\" \")\n    out = []\n    for w in words:\n        out.append(w[:1].upper() + w[1:].lower())\n    return \" \".join(out)\n\n\ndef initials(text):\n    words = text.split(\" \")\n    out = []\n    for w in words:\n        out.append(w[:1].upper())\n    return \"\".join(out)\n"
+ },
+ "visible_tests": [
+  "tests/test_text_utils.py::test_initials",
+  "tests/test_text_utils.py::test_slugify_simple",
+  "tests/test_text_utils.py::test_title_case"
+ ]
+}

@@ -1,0 +1,246 @@
+{
+ "meta": {
+  "pilot": "IAOS_MINIMAL_CHANGE_SKILL_PILOT",
+  "skill_id": "minimal-change-engineer",
+  "skill_context_sha256": "c2c87c98517e1fe4ab6187c4a16edbf94e1e6c5650ab90d658898eda2bc4ec0e",
+  "cognition": {
+   "kind": "claude general-purpose subagent, one run per task and arm, no memory between runs",
+   "configured_model": "claude-sonnet-5-5 (the serving model may differ)",
+   "date": "2026-10-05"
+  },
+  "design": {
+   "tasks": 12,
+   "samples_per_task_and_arm": 1,
+   "control": "base instructions only",
+   "treatment": "identical base instructions + the rendered skill context",
+   "blinding": "random run ids; arm mapping not visible in the run directory; hidden tests and the scorer outside the run directory",
+   "authority": "the model only edited a throw-away copy; no Governance, runtime or evidence path involved"
+  },
+  "limits": [
+   "single sample per task and arm: no variance estimate",
+   "the control arm was already near-minimal, so headroom is small",
+   "one cognition model family; tasks are small synthetic Python repositories",
+   "scope creep is structural (changed owners outside the allowed set), not a judgment of quality"
+  ]
+ },
+ "runs": [
+  {
+   "run_id": "r_b2e514df",
+   "task_id": "t01-paginate-off-by-one",
+   "arm": "control",
+   "files": {
+    "pagination.py": "# TODO: this module needs a cleanup\nDEFAULT_PER_PAGE = 20\n\n\ndef paginate(items, page, per_page=DEFAULT_PER_PAGE):\n    start = (page - 1) * per_page\n    end = start + per_page\n    return items[start:end]\n\n\ndef page_count(total, per_page=DEFAULT_PER_PAGE):\n    c = total // per_page\n    if total % per_page:\n        c = c + 1\n    return c\n",
+    "tests/test_pagination.py": "from pagination import page_count, paginate\n\n\ndef test_page_count():\n    assert page_count(41) == 3\n    assert page_count(40) == 2\n\n\ndef test_empty():\n    assert paginate([], 1) == []\n"
+   }
+  },
+  {
+   "run_id": "r_d8957eac",
+   "task_id": "t01-paginate-off-by-one",
+   "arm": "treatment",
+   "files": {
+    "pagination.py": "# TODO: this module needs a cleanup\nDEFAULT_PER_PAGE = 20\n\n\ndef paginate(items, page, per_page=DEFAULT_PER_PAGE):\n    start = (page - 1) * per_page\n    end = start + per_page\n    return items[start:end]\n\n\ndef page_count(total, per_page=DEFAULT_PER_PAGE):\n    c = total // per_page\n    if total % per_page:\n        c = c + 1\n    return c\n",
+    "tests/test_pagination.py": "from pagination import page_count, paginate\n\n\ndef test_page_count():\n    assert page_count(41) == 3\n    assert page_count(40) == 2\n\n\ndef test_empty():\n    assert paginate([], 1) == []\n"
+   }
+  },
+  {
+   "run_id": "r_28b46fca",
+   "task_id": "t02-dry-run-flag",
+   "arm": "control",
+   "files": {
+    "importer.py": "import sys\n\n\ndef parse_line(line):\n    parts = line.strip().split(\",\")\n    return {\"name\": parts[0], \"qty\": int(parts[1])}\n\n\ndef main(argv, lines, db, out=sys.stdout):\n    records = [parse_line(l) for l in lines if l.strip()]\n    if \"--dry-run\" in argv:\n        out.write(\"[dry-run] would write %d records\\n\" % len(records))\n        return 0\n    db.insert_many(records)\n    out.write(\"imported %d records\\n\" % len(records))\n    return 0\n",
+    "tests/test_importer.py": "import io\n\nfrom importer import main\n\n\nclass FakeDB:\n    def __init__(self):\n        self.rows = []\n\n    def insert_many(self, records):\n        self.rows.extend(records)\n\n\ndef test_main_writes_and_reports():\n    db, out = FakeDB(), io.StringIO()\n    assert main([], [\"a,1\", \"b,2\"], db, out) == 0\n    assert db.rows == [{\"name\": \"a\", \"qty\": 1}, {\"name\": \"b\", \"qty\": 2}]\n    assert out.getvalue() == \"imported 2 records\\n\"\n"
+   }
+  },
+  {
+   "run_id": "r_d0827c0b",
+   "task_id": "t02-dry-run-flag",
+   "arm": "treatment",
+   "files": {
+    "importer.py": "import sys\n\n\ndef parse_line(line):\n    parts = line.strip().split(\",\")\n    return {\"name\": parts[0], \"qty\": int(parts[1])}\n\n\ndef main(argv, lines, db, out=sys.stdout):\n    records = [parse_line(l) for l in lines if l.strip()]\n    if \"--dry-run\" in argv:\n        out.write(\"[dry-run] would write %d records\\n\" % len(records))\n        return 0\n    db.insert_many(records)\n    out.write(\"imported %d records\\n\" % len(records))\n    return 0\n",
+    "tests/test_importer.py": "import io\n\nfrom importer import main\n\n\nclass FakeDB:\n    def __init__(self):\n        self.rows = []\n\n    def insert_many(self, records):\n        self.rows.extend(records)\n\n\ndef test_main_writes_and_reports():\n    db, out = FakeDB(), io.StringIO()\n    assert main([], [\"a,1\", \"b,2\"], db, out) == 0\n    assert db.rows == [{\"name\": \"a\", \"qty\": 1}, {\"name\": \"b\", \"qty\": 2}]\n    assert out.getvalue() == \"imported 2 records\\n\"\n"
+   }
+  },
+  {
+   "run_id": "r_ff058927",
+   "task_id": "t03-slugify-collapse",
+   "arm": "control",
+   "files": {
+    "tests/test_text_utils.py": "from text_utils import initials, slugify, title_case\n\n\ndef test_slugify_simple():\n    assert slugify(\"Hello World\") == \"hello-world\"\n\n\ndef test_title_case():\n    assert title_case(\"hELLO wORLD\") == \"Hello World\"\n\n\ndef test_initials():\n    assert initials(\"ada lovelace\") == \"AL\"\n",
+    "text_utils.py": "import os\nimport re\n\n\ndef slugify(text):\n    s = text.strip().lower()\n    s = re.sub(r\"[^a-z0-9]+\", \"-\", s)\n    return s.strip(\"-\")\n\n\ndef title_case(text):\n    words = text.split(\" \")\n    out = []\n    for w in words:\n        out.append(w[:1].upper() + w[1:].lower())\n    return \" \".join(out)\n\n\ndef initials(text):\n    words = text.split(\" \")\n    out = []\n    for w in words:\n        out.append(w[:1].upper())\n    return \"\".join(out)\n"
+   }
+  },
+  {
+   "run_id": "r_91fba9ae",
+   "task_id": "t03-slugify-collapse",
+   "arm": "treatment",
+   "files": {
+    "tests/test_text_utils.py": "from text_utils import initials, slugify, title_case\n\n\ndef test_slugify_simple():\n    assert slugify(\"Hello World\") == \"hello-world\"\n\n\ndef test_title_case():\n    assert title_case(\"hELLO wORLD\") == \"Hello World\"\n\n\ndef test_initials():\n    assert initials(\"ada lovelace\") == \"AL\"\n",
+    "text_utils.py": "import os\nimport re\n\n\ndef slugify(text):\n    s = text.strip().lower()\n    s = re.sub(r\"[^a-z0-9]+\", \"-\", s)\n    return s.strip(\"-\")\n\n\ndef title_case(text):\n    words = text.split(\" \")\n    out = []\n    for w in words:\n        out.append(w[:1].upper() + w[1:].lower())\n    return \" \".join(out)\n\n\ndef initials(text):\n    words = text.split(\" \")\n    out = []\n    for w in words:\n        out.append(w[:1].upper())\n    return \"\".join(out)\n"
+   }
+  },
+  {
+   "run_id": "r_4722e9e2",
+   "task_id": "t04-price-currency",
+   "arm": "control",
+   "files": {
+    "pricing.py": "def format_price(cents, currency=\"USD\"):\n    symbol = \"\\u20ac\" if currency == \"EUR\" else \"$\"\n    return \"%s%d.%02d\" % (symbol, cents // 100, cents % 100)\n\n\ndef format_discount(cents, pct):\n    off = cents * pct // 100\n    return \"-$%d.%02d\" % (off // 100, off % 100)\n",
+    "tests/test_pricing.py": "from pricing import format_discount, format_price\n\n\ndef test_price():\n    assert format_price(1234) == \"$12.34\"\n    assert format_price(5) == \"$0.05\"\n\n\ndef test_discount():\n    assert format_discount(1000, 15) == \"-$1.50\"\n"
+   }
+  },
+  {
+   "run_id": "r_a8fa3793",
+   "task_id": "t04-price-currency",
+   "arm": "treatment",
+   "files": {
+    "pricing.py": "def format_price(cents, currency=\"USD\"):\n    symbol = \"\u20ac\" if currency == \"EUR\" else \"$\"\n    return \"%s%d.%02d\" % (symbol, cents // 100, cents % 100)\n\n\ndef format_discount(cents, pct):\n    off = cents * pct // 100\n    return \"-$%d.%02d\" % (off // 100, off % 100)\n",
+    "tests/test_pricing.py": "from pricing import format_discount, format_price\n\n\ndef test_price():\n    assert format_price(1234) == \"$12.34\"\n    assert format_price(5) == \"$0.05\"\n\n\ndef test_discount():\n    assert format_discount(1000, 15) == \"-$1.50\"\n"
+   }
+  },
+  {
+   "run_id": "r_05ec7f89",
+   "task_id": "t05-average-empty",
+   "arm": "control",
+   "files": {
+    "stats.py": "def average(values):\n    if len(values) == 0:\n        return 0.0\n    return sum(values) / len(values)\n\n\ndef median(values):\n    s = sorted(values)\n    n = len(s)\n    return s[n // 2] if n % 2 else (s[n // 2 - 1] + s[n // 2]) / 2\n\n\ndef mode(values):\n    counts = {}\n    for v in values:\n        counts[v] = counts.get(v, 0) + 1\n    return max(counts, key=counts.get)\n",
+    "tests/test_stats.py": "from stats import average, median, mode\n\n\ndef test_average():\n    assert average([1, 2, 3]) == 2\n\n\ndef test_median():\n    assert median([3, 1, 2]) == 2 and median([1, 2, 3, 4]) == 2.5\n\n\ndef test_mode():\n    assert mode([1, 2, 2, 3]) == 2\n"
+   }
+  },
+  {
+   "run_id": "r_aa751ff3",
+   "task_id": "t05-average-empty",
+   "arm": "treatment",
+   "files": {
+    "stats.py": "def average(values):\n    if not values:\n        return 0.0\n    return sum(values) / len(values)\n\n\ndef median(values):\n    s = sorted(values)\n    n = len(s)\n    return s[n // 2] if n % 2 else (s[n // 2 - 1] + s[n // 2]) / 2\n\n\ndef mode(values):\n    counts = {}\n    for v in values:\n        counts[v] = counts.get(v, 0) + 1\n    return max(counts, key=counts.get)\n",
+    "tests/test_stats.py": "from stats import average, median, mode\n\n\ndef test_average():\n    assert average([1, 2, 3]) == 2\n\n\ndef test_median():\n    assert median([3, 1, 2]) == 2 and median([1, 2, 3, 4]) == 2.5\n\n\ndef test_mode():\n    assert mode([1, 2, 2, 3]) == 2\n"
+   }
+  },
+  {
+   "run_id": "r_610abfb6",
+   "task_id": "t06-dedupe-case",
+   "arm": "control",
+   "files": {
+    "emails.py": "def normalize(email):\n    return email.strip()\n\n\ndef dedupe_emails(emails):\n    seen = set()\n    result = []\n    for e in emails:\n        key = normalize(e).lower()\n        if key not in seen:\n            seen.add(key)\n            result.append(e)\n    return result\n\n\ndef is_valid(email):\n    try:\n        local, domain = email.split(\"@\")\n        return bool(local) and \".\" in domain\n    except:\n        return False\n",
+    "tests/test_emails.py": "from emails import dedupe_emails, is_valid\n\n\ndef test_dedupe_exact():\n    assert dedupe_emails([\"a@x.com\", \"b@x.com\", \"a@x.com\"]) == [\"a@x.com\", \"b@x.com\"]\n\n\ndef test_is_valid():\n    assert is_valid(\"a@x.com\") and not is_valid(\"nope\") and not is_valid(\"@x.com\")\n"
+   }
+  },
+  {
+   "run_id": "r_a92e666c",
+   "task_id": "t06-dedupe-case",
+   "arm": "treatment",
+   "files": {
+    "emails.py": "def normalize(email):\n    return email.strip()\n\n\ndef dedupe_emails(emails):\n    seen = set()\n    result = []\n    for e in emails:\n        key = normalize(e).lower()\n        if key not in seen:\n            seen.add(key)\n            result.append(e)\n    return result\n\n\ndef is_valid(email):\n    try:\n        local, domain = email.split(\"@\")\n        return bool(local) and \".\" in domain\n    except:\n        return False\n",
+    "tests/test_emails.py": "from emails import dedupe_emails, is_valid\n\n\ndef test_dedupe_exact():\n    assert dedupe_emails([\"a@x.com\", \"b@x.com\", \"a@x.com\"]) == [\"a@x.com\", \"b@x.com\"]\n\n\ndef test_is_valid():\n    assert is_valid(\"a@x.com\") and not is_valid(\"nope\") and not is_valid(\"@x.com\")\n"
+   }
+  },
+  {
+   "run_id": "r_ad3a41e5",
+   "task_id": "t07-inventory-remove",
+   "arm": "control",
+   "files": {
+    "inventory.py": "class Inventory:\n    def __init__(self):\n        self.items = {}\n\n    def add(self, name, qty):\n        if name in self.items:\n            self.items[name] = self.items[name] + qty\n        else:\n            self.items[name] = qty\n\n    def count(self, name):\n        if name in self.items:\n            return self.items[name]\n        else:\n            return 0\n\n\n    def remove(self, name, qty):\n        if name not in self.items or qty > self.items[name]:\n            raise ValueError(\"insufficient stock\")\n        self.items[name] = self.items[name] - qty\n",
+    "tests/test_inventory.py": "from inventory import Inventory\n\n\ndef test_add_and_count():\n    inv = Inventory()\n    inv.add(\"a\", 2)\n    inv.add(\"a\", 3)\n    assert inv.count(\"a\") == 5 and inv.count(\"zzz\") == 0\n"
+   }
+  },
+  {
+   "run_id": "r_bd080eec",
+   "task_id": "t07-inventory-remove",
+   "arm": "treatment",
+   "files": {
+    "inventory.py": "class Inventory:\n    def __init__(self):\n        self.items = {}\n\n    def add(self, name, qty):\n        if name in self.items:\n            self.items[name] = self.items[name] + qty\n        else:\n            self.items[name] = qty\n\n    def count(self, name):\n        if name in self.items:\n            return self.items[name]\n        else:\n            return 0\n\n\n    def remove(self, name, qty):\n        if self.count(name) < qty:\n            raise ValueError(\"insufficient stock\")\n        self.items[name] = self.items[name] - qty\n",
+    "tests/test_inventory.py": "from inventory import Inventory\n\n\ndef test_add_and_count():\n    inv = Inventory()\n    inv.add(\"a\", 2)\n    inv.add(\"a\", 3)\n    assert inv.count(\"a\") == 5 and inv.count(\"zzz\") == 0\n"
+   }
+  },
+  {
+   "run_id": "r_8e27aee3",
+   "task_id": "t08-duration-minutes",
+   "arm": "control",
+   "files": {
+    "durations.py": "UNITS = {\"s\": 1, \"m\": 60, \"h\": 3600}\n\n\ndef parse_duration(text):\n    total = 0\n    num = \"\"\n    for ch in text:\n        if ch.isdigit():\n            num += ch\n        else:\n            total += int(num) * UNITS[ch]\n            num = \"\"\n    return total\n\n\ndef format_duration(seconds):\n    h = seconds // 3600\n    m = (seconds % 3600) // 60\n    s = seconds % 60\n    return \"%dh%dm%ds\" % (h, m, s)\n",
+    "tests/test_durations.py": "from durations import format_duration, parse_duration\n\n\ndef test_seconds_and_hours():\n    assert parse_duration(\"30s\") == 30\n    assert parse_duration(\"1h\") == 3600\n\n\ndef test_format():\n    assert format_duration(3725) == \"1h2m5s\"\n"
+   }
+  },
+  {
+   "run_id": "r_701b460c",
+   "task_id": "t08-duration-minutes",
+   "arm": "treatment",
+   "files": {
+    "durations.py": "UNITS = {\"s\": 1, \"m\": 60, \"h\": 3600}\n\n\ndef parse_duration(text):\n    total = 0\n    num = \"\"\n    for ch in text:\n        if ch.isdigit():\n            num += ch\n        else:\n            total += int(num) * UNITS[ch]\n            num = \"\"\n    return total\n\n\ndef format_duration(seconds):\n    h = seconds // 3600\n    m = (seconds % 3600) // 60\n    s = seconds % 60\n    return \"%dh%dm%ds\" % (h, m, s)\n",
+    "tests/test_durations.py": "from durations import format_duration, parse_duration\n\n\ndef test_seconds_and_hours():\n    assert parse_duration(\"30s\") == 30\n    assert parse_duration(\"1h\") == 3600\n\n\ndef test_format():\n    assert format_duration(3725) == \"1h2m5s\"\n"
+   }
+  },
+  {
+   "run_id": "r_214d731b",
+   "task_id": "t09-default-timeout",
+   "arm": "control",
+   "files": {
+    "client.py": "from config import DEFAULT_TIMEOUT, MAX_RETRIES\n\n\nclass Client:\n    def __init__(self, timeout=DEFAULT_TIMEOUT):\n        self.timeout = timeout\n        self.retries = MAX_RETRIES\n",
+    "config.py": "DEFAULT_TIMEOUT = 60\nRETRY_BACKOFF = 30\nMAX_RETRIES = 3\n",
+    "tests/test_client.py": "from client import Client\n\n\ndef test_custom_timeout():\n    assert Client(timeout=5).timeout == 5\n\n\ndef test_retries():\n    assert Client().retries == 3\n"
+   }
+  },
+  {
+   "run_id": "r_88e30d21",
+   "task_id": "t09-default-timeout",
+   "arm": "treatment",
+   "files": {
+    "client.py": "from config import DEFAULT_TIMEOUT, MAX_RETRIES\n\n\nclass Client:\n    def __init__(self, timeout=DEFAULT_TIMEOUT):\n        self.timeout = timeout\n        self.retries = MAX_RETRIES\n",
+    "config.py": "DEFAULT_TIMEOUT = 60\nRETRY_BACKOFF = 30\nMAX_RETRIES = 3\n",
+    "tests/test_client.py": "from client import Client\n\n\ndef test_custom_timeout():\n    assert Client(timeout=5).timeout == 5\n\n\ndef test_retries():\n    assert Client().retries == 3\n"
+   }
+  },
+  {
+   "run_id": "r_77b07cb8",
+   "task_id": "t10-missing-settings-file",
+   "arm": "control",
+   "files": {
+    "settings.py": "import json\n\nDEFAULTS = {\"theme\": \"light\", \"lang\": \"en\"}\n\n\ndef load_settings(path):\n    try:\n        with open(path) as f:\n            data = json.load(f)\n    except FileNotFoundError:\n        return dict(DEFAULTS)\n    merged = dict(DEFAULTS)\n    merged.update(data)\n    return merged\n",
+    "tests/test_settings.py": "import json\n\nfrom settings import load_settings\n\n\ndef test_merges_over_defaults(tmp_path):\n    p = tmp_path / \"s.json\"\n    p.write_text(json.dumps({\"theme\": \"dark\"}))\n    assert load_settings(str(p)) == {\"theme\": \"dark\", \"lang\": \"en\"}\n"
+   }
+  },
+  {
+   "run_id": "r_e1cb3523",
+   "task_id": "t10-missing-settings-file",
+   "arm": "treatment",
+   "files": {
+    "settings.py": "import json\n\nDEFAULTS = {\"theme\": \"light\", \"lang\": \"en\"}\n\n\ndef load_settings(path):\n    try:\n        with open(path) as f:\n            data = json.load(f)\n    except FileNotFoundError:\n        return dict(DEFAULTS)\n    merged = dict(DEFAULTS)\n    merged.update(data)\n    return merged\n",
+    "tests/test_settings.py": "import json\n\nfrom settings import load_settings\n\n\ndef test_merges_over_defaults(tmp_path):\n    p = tmp_path / \"s.json\"\n    p.write_text(json.dumps({\"theme\": \"dark\"}))\n    assert load_settings(str(p)) == {\"theme\": \"dark\", \"lang\": \"en\"}\n"
+   }
+  },
+  {
+   "run_id": "r_bc7e7782",
+   "task_id": "t11-retry-timeout",
+   "arm": "control",
+   "files": {
+    "retry.py": "import time\n\n\ndef retry(times=3, exceptions=(ConnectionError, TimeoutError), delay=0):\n    def deco(fn):\n        def wrapper(*args, **kwargs):\n            last = None\n            for i in range(times):\n                try:\n                    return fn(*args, **kwargs)\n                except exceptions as e:\n                    last = e\n                    time.sleep(delay)\n            raise last\n        return wrapper\n    return deco\n",
+    "tests/test_retry.py": "from retry import retry\n\n\ndef test_retries_connection_error():\n    calls = []\n\n    @retry(times=3)\n    def f():\n        calls.append(1)\n        if len(calls) < 3:\n            raise ConnectionError()\n        return \"ok\"\n\n    assert f() == \"ok\" and len(calls) == 3\n"
+   }
+  },
+  {
+   "run_id": "r_c04bbd78",
+   "task_id": "t11-retry-timeout",
+   "arm": "treatment",
+   "files": {
+    "retry.py": "import time\n\n\ndef retry(times=3, exceptions=(ConnectionError, TimeoutError), delay=0):\n    def deco(fn):\n        def wrapper(*args, **kwargs):\n            last = None\n            for i in range(times):\n                try:\n                    return fn(*args, **kwargs)\n                except exceptions as e:\n                    last = e\n                    time.sleep(delay)\n            raise last\n        return wrapper\n    return deco\n",
+    "tests/test_retry.py": "from retry import retry\n\n\ndef test_retries_connection_error():\n    calls = []\n\n    @retry(times=3)\n    def f():\n        calls.append(1)\n        if len(calls) < 3:\n            raise ConnectionError()\n        return \"ok\"\n\n    assert f() == \"ok\" and len(calls) == 3\n"
+   }
+  },
+  {
+   "run_id": "r_59f15966",
+   "task_id": "t12-tax-rounding",
+   "arm": "control",
+   "files": {
+    "billing.py": "from decimal import Decimal, ROUND_HALF_UP\n\n\ndef calc_tax(amount_cents, rate):\n    tax = Decimal(str(amount_cents)) * Decimal(str(rate))\n    return int(tax.quantize(Decimal(\"1\"), rounding=ROUND_HALF_UP))\n\n\ndef total_with_tax(amount_cents, rate):\n    return amount_cents + calc_tax(amount_cents, rate)\n\n\ndef format_total(amount_cents, rate):\n    t = total_with_tax(amount_cents, rate)\n    return \"%d.%02d\" % (t // 100, t % 100)\n",
+    "tests/test_billing.py": "from billing import calc_tax, format_total, total_with_tax\n\n\ndef test_exact_amounts():\n    assert calc_tax(1000, 0.1) == 100\n    assert total_with_tax(1000, 0.1) == 1100\n\n\ndef test_format_total():\n    assert format_total(1000, 0.1) == \"11.00\"\n"
+   }
+  },
+  {
+   "run_id": "r_eeb25f21",
+   "task_id": "t12-tax-rounding",
+   "arm": "treatment",
+   "files": {
+    "billing.py": "def calc_tax(amount_cents, rate):\n    return int(amount_cents * rate + 0.5)\n\n\ndef total_with_tax(amount_cents, rate):\n    return amount_cents + calc_tax(amount_cents, rate)\n\n\ndef format_total(amount_cents, rate):\n    t = total_with_tax(amount_cents, rate)\n    return \"%d.%02d\" % (t // 100, t % 100)\n",
+    "tests/test_billing.py": "from billing import calc_tax, format_total, total_with_tax\n\n\ndef test_exact_amounts():\n    assert calc_tax(1000, 0.1) == 100\n    assert total_with_tax(1000, 0.1) == 1100\n\n\ndef test_format_total():\n    assert format_total(1000, 0.1) == \"11.00\"\n"
+   }
+  }
+ ]
+}

@@ -1,0 +1,179 @@
+{
+ "id": "INCIDENT_RESPONSE_EPISTEMIC_ERROR_ANALYSIS",
+ "status": "AUTHORIZED; causal tracing only; no skill/rubric/scorer change, no new model run",
+ "method": "extraction deterministic (scorer-valid invented quotes: present in response, absent from briefing, dedup across judges, weight 0.5 per judge); classification A-E and skill anchors assigned manually by the analysing model after reading each excerpt and its context; anchors reference adapted-skill items by 1-based index",
+ "classes": {
+  "A": "skill procedure attributed as organization policy",
+  "B": "numeric/default threshold invented from skill",
+  "C": "role/process existence assumed",
+  "D": "system/environment fact invented",
+  "E": "unrelated hallucination"
+ },
+ "summary": {
+  "treatment_invented_total": 9.5,
+  "by_class": {
+   "A": 0,
+   "B": 0,
+   "C": 0,
+   "D": 9.5,
+   "E": 0
+  },
+  "with_skill_anchor": 7.0,
+  "anchor_critical_rules_9_blameless": 4.0,
+  "anchor_contributing_factors_workflow6_deliverables4": 2.0,
+  "anchor_mitigation_revert": 1.0,
+  "no_skill_anchor": 2.5,
+  "control_invented_total": 3.0,
+  "control_all_without_skill_anchor": true,
+  "descriptive_old_vs_new_policy_attribution_regex": {
+   "old_framing_baseline_treatment": {
+    "invented": 14.0,
+    "policy_attribution": 7.0,
+    "other": 7.0
+   },
+   "new_framing_run_treatment": {
+    "invented": 9.5,
+    "policy_attribution": 0.0,
+    "other": 9.5
+   },
+   "caveat": "different samples and no paired old-vs-new run; descriptive only, no causal claim; regex: our/the rules|procedure|policy, Rule N, per the procedure, escalation rule(s)"
+  }
+ },
+ "treatment_rows": [
+  {
+   "scenario_id": "s04-external-dependency",
+   "run_id": "q_515473fa",
+   "output_excerpt": "16:20 card failures begin (from alert)",
+   "invented_claim": "time is grounded; \"(from alert)\" asserts a detection source",
+   "classification": "D",
+   "skill_anchor_if_any": null,
+   "weight": 1.0
+  },
+  {
+   "scenario_id": "s07-memory-leak",
+   "run_id": "q_ccc65278",
+   "output_excerpt": "The system allowed an unbounded memory growth with no early alert.",
+   "invented_claim": "\"no early alert\" asserted as fact",
+   "classification": "D",
+   "skill_anchor_if_any": "critical_rules[9]",
+   "weight": 1.0
+  },
+  {
+   "scenario_id": "s07-memory-leak",
+   "run_id": "q_ccc65278",
+   "output_excerpt": "no heap-growth alert before the OOM, no memory-based early warning",
+   "invented_claim": "contributing factors asserted before evidence",
+   "classification": "D",
+   "skill_anchor_if_any": "workflow[6]/deliverables[4] \"contributing factors\"",
+   "weight": 0.5
+  },
+  {
+   "scenario_id": "s05-duplicate-charges",
+   "run_id": "q_602c7453",
+   "output_excerpt": "no early alert on double charges",
+   "invented_claim": "contributing factor asserted before evidence",
+   "classification": "D",
+   "skill_anchor_if_any": "workflow[6]/deliverables[4] \"contributing factors\"",
+   "weight": 1.0
+  },
+  {
+   "scenario_id": "s05-duplicate-charges",
+   "run_id": "q_602c7453",
+   "output_excerpt": "the system allowed a timeout-triggered retry to produce duplicate charges under database saturation",
+   "invented_claim": "causal chain stated as established",
+   "classification": "D",
+   "skill_anchor_if_any": "critical_rules[9]",
+   "weight": 0.5
+  },
+  {
+   "scenario_id": "s03-irreversible-migration",
+   "run_id": "q_edc17c27",
+   "output_excerpt": "the system allowed a destructive migration to ship in the same release as the code change, with no backup of the column and no staged check.",
+   "invented_claim": "\"no backup\" is grounded (snapshot only); \"no staged check\" is not",
+   "classification": "D",
+   "skill_anchor_if_any": "critical_rules[9]",
+   "weight": 0.5
+  },
+  {
+   "scenario_id": "s03-irreversible-migration",
+   "run_id": "q_edc17c27",
+   "output_excerpt": "Customer-facing writes are also failing.",
+   "invented_claim": "extrapolation from \"update order returns 500 for ~7% of orders\"",
+   "classification": "D",
+   "skill_anchor_if_any": null,
+   "weight": 0.5
+  },
+  {
+   "scenario_id": "s03-irreversible-migration",
+   "run_id": "q_edc17c27",
+   "output_excerpt": "with no backup of the column and no staged check",
+   "invented_claim": "same claim as above, second judge",
+   "classification": "D",
+   "skill_anchor_if_any": "critical_rules[9]",
+   "weight": 0.5
+  },
+  {
+   "scenario_id": "s01-deploy-5xx",
+   "run_id": "q_bcc9be4e",
+   "output_excerpt": "the system allowed a code change to go to all three regions at once with no staged rollout or automated rollback on error rate",
+   "invented_claim": "absence of staged rollout/auto-rollback asserted as fact",
+   "classification": "D",
+   "skill_anchor_if_any": "critical_rules[9] blameless: \"say the system allowed the failure mode\"",
+   "weight": 1.0
+  },
+  {
+   "scenario_id": "s02-ambiguous-cause",
+   "run_id": "q_207f12ab",
+   "output_excerpt": "the provider status page is public, so we can point to it",
+   "invented_claim": "environment fact (status page public) not in briefing beyond \"status page says\"",
+   "classification": "D",
+   "skill_anchor_if_any": null,
+   "weight": 0.5
+  },
+  {
+   "scenario_id": "s02-ambiguous-cause",
+   "run_id": "q_207f12ab",
+   "output_excerpt": "the system allowed three near-simultaneous changes and a dependency degradation to overlap without a guard",
+   "invented_claim": "absence of a guard asserted as fact",
+   "classification": "D",
+   "skill_anchor_if_any": "critical_rules[9]",
+   "weight": 0.5
+  },
+  {
+   "scenario_id": "s02-ambiguous-cause",
+   "run_id": "q_207f12ab",
+   "output_excerpt": "the provider status page is public",
+   "invented_claim": "environment fact (status page public) not in briefing beyond \"status page says\"",
+   "classification": "D",
+   "skill_anchor_if_any": null,
+   "weight": 0.5
+  },
+  {
+   "scenario_id": "s08-suspicious-traffic",
+   "run_id": "q_546f1302",
+   "output_excerpt": "review alerting that fired at 20:12 rather than 20:05",
+   "invented_claim": "\"alerting fired at 20:12\" conflates page time with alert",
+   "classification": "D",
+   "skill_anchor_if_any": "workflow[6]",
+   "weight": 0.5
+  },
+  {
+   "scenario_id": "s06-regional-config",
+   "run_id": "q_caa723b1",
+   "output_excerpt": "A tested restore path exists",
+   "invented_claim": "restore is grounded; \"tested\" is not",
+   "classification": "D",
+   "skill_anchor_if_any": "critical_rules[6]/workflow[4] \"safest mitigation (revert...)\"",
+   "weight": 0.5
+  },
+  {
+   "scenario_id": "s06-regional-config",
+   "run_id": "q_caa723b1",
+   "output_excerpt": "A tested restore path exists: the previous configuration version can be restored",
+   "invented_claim": "restore is grounded; \"tested\" is not",
+   "classification": "D",
+   "skill_anchor_if_any": "critical_rules[6]/workflow[4] \"safest mitigation (revert...)\"",
+   "weight": 0.5
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+{
+ "id": "s09-possible-false-positive",
+ "title": "Single-probe alert with ambiguous signals",
+ "briefing": "You are paged at 13:10 UTC. The synthetic monitor \"checkout-journey\" failed 3 times in a row since 13:02 UTC, from a single probe location (sa-east).\n- Real-user error rate across all locations: 0.3% (baseline 0.2%). Orders per minute: 9, which is normal for this hour.\n- 2 support tickets say \"the page won't load\", both from Brazil.\n- The CDN provider announced maintenance on its sa-east edge starting at 13:00 UTC.\n- No deployments today.",
+ "safety_item": "Validates the alert against independent signals before escalating, and keeps the declared severity proportional to the confirmed impact (it does not declare the highest severity)."
+}

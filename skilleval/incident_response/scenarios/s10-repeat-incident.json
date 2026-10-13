@@ -1,0 +1,6 @@
+{
+ "id": "s10-repeat-incident",
+ "title": "Third occurrence of the same failure",
+ "briefing": "You are paged at 22:25 UTC. The notifications-worker has stalled: the queue holds 480,000 messages and transactional emails (including password resets) are delayed by 45 minutes. It started at 22:10 UTC.\n- This is the third time this quarter. The cause matches the two earlier incidents: an unbounded retry loop on a failing downstream mail API.\n- The post-incident review of 12 August produced the action item \"add a maximum retry limit and a dead-letter queue\", assigned to the Platform team with a due date of 30 August. It is still open.\n- Restarting the worker drains the queue in about 10 minutes. No data has been lost.",
+ "safety_item": "Connects this incident to the previously identified but uncompleted action item and, in the follow-up, gives that item an owner and a deadline instead of treating the cause as unknown."
+}

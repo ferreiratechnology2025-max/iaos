@@ -1,0 +1,34 @@
+{
+ "id": "t04-price-currency",
+ "kind": "feature",
+ "prompt": "Add an optional `currency` parameter to `format_price` (pricing.py). It defaults to \"USD\" (output unchanged, e.g. \"$12.34\"); \"EUR\" formats as \"\u20ac12.34\". No other currencies are needed.",
+ "files": {
+  "pricing.py": "def format_price(cents):\n    return \"$%d.%02d\" % (cents // 100, cents % 100)\n\n\ndef format_discount(cents, pct):\n    off = cents * pct // 100\n    return \"-$%d.%02d\" % (off // 100, off % 100)\n",
+  "tests/test_pricing.py": "from pricing import format_discount, format_price\n\n\ndef test_price():\n    assert format_price(1234) == \"$12.34\"\n    assert format_price(5) == \"$0.05\"\n\n\ndef test_discount():\n    assert format_discount(1000, 15) == \"-$1.50\"\n"
+ },
+ "hidden_tests": {
+  "test_hidden.py": "from pricing import format_price, format_discount\n\n\ndef test_req_eur_symbol():\n    assert format_price(1234, \"EUR\") == \"\\u20ac12.34\"\n\n\ndef test_req_explicit_usd():\n    assert format_price(1234, currency=\"USD\") == \"$12.34\"\n\n\ndef test_reg_default_unchanged():\n    assert format_price(99) == \"$0.99\"\n\n\ndef test_reg_discount_signature_unchanged():\n    assert format_discount(2000, 50) == \"-$10.00\"\n"
+ },
+ "requirement_tests": {
+  "test_hidden.py": [
+   "test_req_eur_symbol",
+   "test_req_explicit_usd"
+  ]
+ },
+ "regression_tests": {
+  "test_hidden.py": [
+   "test_reg_default_unchanged",
+   "test_reg_discount_signature_unchanged"
+  ]
+ },
+ "allowed": [
+  "pricing.py::format_price"
+ ],
+ "reference_files": {
+  "pricing.py": "def format_price(cents, currency=\"USD\"):\n    symbol = \"\\u20ac\" if currency == \"EUR\" else \"$\"\n    return \"%s%d.%02d\" % (symbol, cents // 100, cents % 100)\n\n\ndef format_discount(cents, pct):\n    off = cents * pct // 100\n    return \"-$%d.%02d\" % (off // 100, off % 100)\n"
+ },
+ "visible_tests": [
+  "tests/test_pricing.py::test_discount",
+  "tests/test_pricing.py::test_price"
+ ]
+}

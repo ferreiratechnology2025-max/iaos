@@ -1,0 +1,36 @@
+{
+ "id": "t05-average-empty",
+ "kind": "bugfix",
+ "prompt": "`average([])` (stats.py) raises ZeroDivisionError. Make `average` return 0.0 for an empty sequence.",
+ "files": {
+  "stats.py": "def average(values):\n    return sum(values) / len(values)\n\n\ndef median(values):\n    s = sorted(values)\n    n = len(s)\n    return s[n // 2] if n % 2 else (s[n // 2 - 1] + s[n // 2]) / 2\n\n\ndef mode(values):\n    counts = {}\n    for v in values:\n        counts[v] = counts.get(v, 0) + 1\n    return max(counts, key=counts.get)\n",
+  "tests/test_stats.py": "from stats import average, median, mode\n\n\ndef test_average():\n    assert average([1, 2, 3]) == 2\n\n\ndef test_median():\n    assert median([3, 1, 2]) == 2 and median([1, 2, 3, 4]) == 2.5\n\n\ndef test_mode():\n    assert mode([1, 2, 2, 3]) == 2\n"
+ },
+ "hidden_tests": {
+  "test_hidden.py": "import pytest\n\nfrom stats import average, median, mode\n\n\ndef test_req_empty_list_is_zero():\n    assert average([]) == 0.0\n\n\ndef test_req_empty_tuple_is_zero():\n    assert average(()) == 0.0\n\n\ndef test_reg_average_normal():\n    assert average([2, 4]) == 3\n\n\ndef test_reg_median_empty_still_raises():\n    with pytest.raises(IndexError):\n        median([])\n\n\ndef test_reg_mode_empty_still_raises():\n    with pytest.raises(ValueError):\n        mode([])\n"
+ },
+ "requirement_tests": {
+  "test_hidden.py": [
+   "test_req_empty_list_is_zero",
+   "test_req_empty_tuple_is_zero"
+  ]
+ },
+ "regression_tests": {
+  "test_hidden.py": [
+   "test_reg_average_normal",
+   "test_reg_median_empty_still_raises",
+   "test_reg_mode_empty_still_raises"
+  ]
+ },
+ "allowed": [
+  "stats.py::average"
+ ],
+ "reference_files": {
+  "stats.py": "def average(values):\n    if not values:\n        return 0.0\n    return sum(values) / len(values)\n\n\ndef median(values):\n    s = sorted(values)\n    n = len(s)\n    return s[n // 2] if n % 2 else (s[n // 2 - 1] + s[n // 2]) / 2\n\n\ndef mode(values):\n    counts = {}\n    for v in values:\n        counts[v] = counts.get(v, 0) + 1\n    return max(counts, key=counts.get)\n"
+ },
+ "visible_tests": [
+  "tests/test_stats.py::test_average",
+  "tests/test_stats.py::test_median",
+  "tests/test_stats.py::test_mode"
+ ]
+}

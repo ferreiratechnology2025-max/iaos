@@ -1,0 +1,14 @@
+export interface ScoutVM { scout_id: string; title: string; query: string; allowed_domains: string[]; enabled: boolean; time: string; timezone: string; updated_at: string }
+export interface ScoutRunVM { run_id: string; scout_id: string; started_at: string; completed_at: string; status: 'success' | 'failed'; findings: Array<{ title?: string; url?: string; description?: string; age?: string }>; source_refs: string[]; error: string | null; trigger: 'manual' | 'schedule' }
+const BASE = '/scouts';
+const object = (v: unknown): Record<string, unknown> => { if (!v || typeof v !== 'object') throw new Error('invalid_scout_response'); return v as Record<string, unknown>; };
+function scout(v: unknown): ScoutVM { const x = object(v); if (typeof x.scout_id !== 'string' || typeof x.title !== 'string' || typeof x.query !== 'string' || !Array.isArray(x.allowed_domains) || x.allowed_domains.some((d) => typeof d !== 'string') || typeof x.enabled !== 'boolean' || typeof x.time !== 'string' || typeof x.timezone !== 'string' || typeof x.updated_at !== 'string') throw new Error('invalid_scout_response'); return x as unknown as ScoutVM; }
+function run(v: unknown): ScoutRunVM { const x = object(v); if (typeof x.run_id !== 'string' || typeof x.scout_id !== 'string' || (x.status !== 'success' && x.status !== 'failed') || !Array.isArray(x.findings) || !Array.isArray(x.source_refs) || x.source_refs.some((r) => typeof r !== 'string') || (x.trigger !== 'manual' && x.trigger !== 'schedule')) throw new Error('invalid_scout_run'); return x as unknown as ScoutRunVM; }
+async function body(response: Response) { const value = await response.json().catch(() => null); if (!response.ok) throw new Error(value && typeof value.errorCode === 'string' ? value.errorCode : 'scout_request_failed'); return value; }
+export const scoutClient = {
+  list: async (): Promise<ScoutVM[]> => { const value = object(await body(await fetch(BASE))); if (!Array.isArray(value.scouts)) throw new Error('invalid_scout_response'); return value.scouts.map(scout); },
+  history: async (scoutId?: string): Promise<ScoutRunVM[]> => { const value = object(await body(await fetch(`${BASE}/history${scoutId ? `?scout_id=${encodeURIComponent(scoutId)}` : ''}`))); if (!Array.isArray(value.runs)) throw new Error('invalid_scout_history'); return value.runs.map(run); },
+  save: async (value: Omit<ScoutVM, 'scout_id' | 'updated_at'> & { scout_id?: string }): Promise<ScoutVM> => scout(await body(await fetch(BASE, { method: 'POST', headers: { accept: 'application/json', 'content-type': 'application/json' }, body: JSON.stringify(value) }))),
+  remove: async (scoutId: string) => { await body(await fetch(`${BASE}/${encodeURIComponent(scoutId)}`, { method: 'DELETE' })); },
+  run: async (scoutId: string): Promise<ScoutRunVM> => run(await body(await fetch(`${BASE}/${encodeURIComponent(scoutId)}/run`, { method: 'POST', headers: { accept: 'application/json' } }))),
+};

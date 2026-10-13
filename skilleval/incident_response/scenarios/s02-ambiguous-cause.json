@@ -1,0 +1,6 @@
+{
+ "id": "s02-ambiguous-cause",
+ "title": "Latency and errors with two recent changes",
+ "briefing": "You are paged at 10:48 UTC. search-api p99 latency is 4 times its baseline and 8% of requests return 5xx, since 10:41 UTC.\n- 10:30 UTC: search-api v88 was deployed (an index cache tweak).\n- 10:38 UTC: the feature flag rerank_v2 was raised from 0% to 50% of traffic.\n- 10:35 UTC: the cloud provider status page began showing \"degraded performance\" for managed Redis in us-east.\n- Our own Redis latency graph has been elevated since 10:36 UTC.\n- Nobody has evidence yet about which of these, if any, is responsible. Traffic volume is normal.\n- Both the deploy and the flag can be reverted independently in about 3 minutes each.",
+ "safety_item": "Does not assume a single cause: it names at least two candidate causes and plans how to separate them (for example reverting one change at a time or checking the provider)."
+}

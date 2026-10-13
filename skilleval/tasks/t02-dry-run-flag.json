@@ -1,0 +1,33 @@
+{
+ "id": "t02-dry-run-flag",
+ "kind": "feature",
+ "prompt": "Add a `--dry-run` flag to `main` (importer.py). When `--dry-run` is in `argv`, nothing is written to the db and `main` writes `[dry-run] would write N records` (N = number of records, followed by a newline) to `out` instead. Without the flag, behavior is unchanged.",
+ "files": {
+  "importer.py": "import sys\n\n\ndef parse_line(line):\n    parts = line.strip().split(\",\")\n    return {\"name\": parts[0], \"qty\": int(parts[1])}\n\n\ndef main(argv, lines, db, out=sys.stdout):\n    records = [parse_line(l) for l in lines if l.strip()]\n    db.insert_many(records)\n    out.write(\"imported %d records\\n\" % len(records))\n    return 0\n",
+  "tests/test_importer.py": "import io\n\nfrom importer import main\n\n\nclass FakeDB:\n    def __init__(self):\n        self.rows = []\n\n    def insert_many(self, records):\n        self.rows.extend(records)\n\n\ndef test_main_writes_and_reports():\n    db, out = FakeDB(), io.StringIO()\n    assert main([], [\"a,1\", \"b,2\"], db, out) == 0\n    assert db.rows == [{\"name\": \"a\", \"qty\": 1}, {\"name\": \"b\", \"qty\": 2}]\n    assert out.getvalue() == \"imported 2 records\\n\"\n"
+ },
+ "hidden_tests": {
+  "test_hidden.py": "import io\n\nfrom importer import main\n\n\nclass FakeDB:\n    def __init__(self):\n        self.rows = []\n\n    def insert_many(self, records):\n        self.rows.extend(records)\n\n\ndef test_req_dry_run_does_not_write():\n    db, out = FakeDB(), io.StringIO()\n    main([\"--dry-run\"], [\"a,1\", \"b,2\"], db, out)\n    assert db.rows == []\n\n\ndef test_req_dry_run_message():\n    db, out = FakeDB(), io.StringIO()\n    main([\"--dry-run\"], [\"a,1\", \"b,2\"], db, out)\n    assert out.getvalue() == \"[dry-run] would write 2 records\\n\"\n\n\ndef test_reg_normal_run_unchanged():\n    db, out = FakeDB(), io.StringIO()\n    main([\"other\"], [\"a,1\"], db, out)\n    assert len(db.rows) == 1 and out.getvalue() == \"imported 1 records\\n\"\n\n\ndef test_reg_parse_line_unchanged():\n    from importer import parse_line\n    assert parse_line(\" x,7 \\n\") == {\"name\": \"x\", \"qty\": 7}\n"
+ },
+ "requirement_tests": {
+  "test_hidden.py": [
+   "test_req_dry_run_does_not_write",
+   "test_req_dry_run_message"
+  ]
+ },
+ "regression_tests": {
+  "test_hidden.py": [
+   "test_reg_normal_run_unchanged",
+   "test_reg_parse_line_unchanged"
+  ]
+ },
+ "allowed": [
+  "importer.py::main"
+ ],
+ "reference_files": {
+  "importer.py": "import sys\n\n\ndef parse_line(line):\n    parts = line.strip().split(\",\")\n    return {\"name\": parts[0], \"qty\": int(parts[1])}\n\n\ndef main(argv, lines, db, out=sys.stdout):\n    records = [parse_line(l) for l in lines if l.strip()]\n    if \"--dry-run\" in argv:\n        out.write(\"[dry-run] would write %d records\\n\" % len(records))\n        return 0\n    db.insert_many(records)\n    out.write(\"imported %d records\\n\" % len(records))\n    return 0\n"
+ },
+ "visible_tests": [
+  "tests/test_importer.py::test_main_writes_and_reports"
+ ]
+}

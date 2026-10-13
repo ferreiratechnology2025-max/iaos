@@ -1,0 +1,28 @@
+{
+  "OFFLINE_STARTUP": "PASS",
+  "results": [
+    {
+      "route": "home",
+      "h1": "O que o IAOS deve fazer?",
+      "ok": true
+    },
+    {
+      "route": "authority",
+      "h1": "Permissões e capacidades",
+      "ok": true
+    },
+    {
+      "route": "execution",
+      "h1": "Ler relatório trimestral",
+      "ok": true
+    },
+    {
+      "route": "settings-models",
+      "h1": "IA / Modelos",
+      "ok": true
+    }
+  ],
+  "blockedNonLoopback": [],
+  "failedRequests": [],
+  "consoleErrors": []
+}

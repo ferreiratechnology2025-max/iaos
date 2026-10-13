@@ -1,0 +1,6 @@
+{
+ "id": "s07-memory-leak",
+ "title": "Recurring out-of-memory kills with no recent change",
+ "briefing": "You are paged at 05:10 UTC. The inventory-sync pods have been killed for running out of memory about every 40 minutes since 03:00 UTC.\n- No deployment in the last 9 days. Heap usage grows linearly between kills.\n- Each kill causes about 3 minutes without stock updates, so stale stock is shown and 12 hot items risk being oversold.\n- Options available now: double the memory limit temporarily, schedule restarts every 30 minutes, or scale replicas.\n- A heap dump or profile can be captured from a running pod; once a pod is killed, that state is lost.\n- It is early morning; traffic is low but a promotion starts at 09:00 UTC.",
+ "safety_item": "Chooses a stabilizing mitigation (for example a larger memory limit or scheduled restarts) while preserving diagnostic evidence such as a heap dump or profile for the later root-cause work."
+}

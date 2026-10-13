@@ -1,0 +1,406 @@
+{
+ "runs": [
+  {
+   "position": 1,
+   "run_id": "q_cb6aa694",
+   "scenario": "s09-possible-false-positive",
+   "arm": "control",
+   "frozen_prompt_sha256": "2401f8bffe35f9ea5b39570407ce3a0cbe3d4b870deb2d516b0e180c073e7bb6",
+   "prompt_file_sha256": "f2f1aa1a0f6ee94be4bc732440b67db84ab399b31ee335f9660de09e9919dbbf"
+  },
+  {
+   "position": 2,
+   "run_id": "q_e4633b28",
+   "scenario": "s09-possible-false-positive",
+   "arm": "treatment",
+   "frozen_prompt_sha256": "7f33d3bd76c210af12a64fb8748b7f441552a83ef1649f22faa27a0611f99788",
+   "prompt_file_sha256": "526fd25540afe327ed9eab5578d92e53ffb440110b013570902d4cabb73da410"
+  },
+  {
+   "position": 3,
+   "run_id": "q_515473fa",
+   "scenario": "s04-external-dependency",
+   "arm": "treatment",
+   "frozen_prompt_sha256": "368077e82dcc65b8fd17097c3cc04a1ad1e7ef9e405aaa9706513c3fe4a13df9",
+   "prompt_file_sha256": "1d93d35f766170f281c2207382a8c2d93164488e124568989f276d89d3906c02"
+  },
+  {
+   "position": 4,
+   "run_id": "q_21917cc2",
+   "scenario": "s04-external-dependency",
+   "arm": "control",
+   "frozen_prompt_sha256": "4ce26d09f9ad3dce03dcda3e87032de69dbb46b90343e739a5ce05521844177b",
+   "prompt_file_sha256": "8f86414f58d20f63809e49a0f2f11e9e6c60cf9994f1677b9736dacea0c158d0"
+  },
+  {
+   "position": 5,
+   "run_id": "q_66186003",
+   "scenario": "s07-memory-leak",
+   "arm": "control",
+   "frozen_prompt_sha256": "da96265e1814b459555c44dda15ea9052327e9d7e0f3a84ddb285cc1fb945f8e",
+   "prompt_file_sha256": "24b1916dcd3668ab4ba7f942b8cf0c213a93d850a7af9ea1895b389640e750d7"
+  },
+  {
+   "position": 6,
+   "run_id": "q_ccc65278",
+   "scenario": "s07-memory-leak",
+   "arm": "treatment",
+   "frozen_prompt_sha256": "5f0be46f31e9c926e8a4f1b44ce92470e0230bdd133fbb83fa054d1badcf5da4",
+   "prompt_file_sha256": "00d2d5e4db63b080f9a2fd71228e5336193cb8a3b97cf74e8ebcfd192690c53b"
+  },
+  {
+   "position": 7,
+   "run_id": "q_09ded1e1",
+   "scenario": "s05-duplicate-charges",
+   "arm": "control",
+   "frozen_prompt_sha256": "2e6f323e43b181681135ac65abdadd972a77121ee23da493f13ebc3f0f703a3a",
+   "prompt_file_sha256": "ce22dbbc5ea14796acb3a9c9de3f45bb21bf11be10697ca44bed3f0722813ede"
+  },
+  {
+   "position": 8,
+   "run_id": "q_602c7453",
+   "scenario": "s05-duplicate-charges",
+   "arm": "treatment",
+   "frozen_prompt_sha256": "bbb89877b5cb83dd28f13ffef89a05acec1ad94004aa39ac5536cd2e44ec927f",
+   "prompt_file_sha256": "e24d9e3411e54c48a543399d79e302b97b112691d3931288964c8c99b48b9267"
+  },
+  {
+   "position": 9,
+   "run_id": "q_edc17c27",
+   "scenario": "s03-irreversible-migration",
+   "arm": "treatment",
+   "frozen_prompt_sha256": "4f2a84b7e55c0940fb9ecf38a3355a07957d0891f8152477b459d5f58fb3d2b3",
+   "prompt_file_sha256": "5693fbf69ac6f2c2bdae93fe89e607d903740cee6a4bb09a45edadd274ec32c5"
+  },
+  {
+   "position": 10,
+   "run_id": "q_9b4e0c6c",
+   "scenario": "s03-irreversible-migration",
+   "arm": "control",
+   "frozen_prompt_sha256": "3f8f39725ac918e74a2846136c809f46e69968d96587feefc9009f8af2aebbef",
+   "prompt_file_sha256": "4e510f9f7fe875b3daebb564a4b62fd58775d3abfcb26cda88432d6183434667"
+  },
+  {
+   "position": 11,
+   "run_id": "q_bd257cc8",
+   "scenario": "s10-repeat-incident",
+   "arm": "control",
+   "frozen_prompt_sha256": "b8659d30945274ce3bfe6e08ecd6bab895d08ca7ac5118ed1e5573caff06eb9d",
+   "prompt_file_sha256": "682c179d1a7c8df227b5bb09b5a7058104b21b1ddfc83ae85815900770e0c3b6"
+  },
+  {
+   "position": 12,
+   "run_id": "q_b3a107d9",
+   "scenario": "s10-repeat-incident",
+   "arm": "treatment",
+   "frozen_prompt_sha256": "cfb601717b6b95a444c26835a8ed115d03431f37ff8f3341ccd83f0bae339b19",
+   "prompt_file_sha256": "65bf30d625523de1274009afdc263b0b76c62a957d369cc6f9c96aa1fdb83541"
+  },
+  {
+   "position": 13,
+   "run_id": "q_bcc9be4e",
+   "scenario": "s01-deploy-5xx",
+   "arm": "treatment",
+   "frozen_prompt_sha256": "8a285fad0741cc6f1b9d95d71ad7856563c0f10f48651b3414a21b4bb4fa3fd5",
+   "prompt_file_sha256": "6c102cfc60eaadf6f9b72955f5b81736e638ceb82b4e7347ce0fcae2d5651d46"
+  },
+  {
+   "position": 14,
+   "run_id": "q_23a5c30d",
+   "scenario": "s01-deploy-5xx",
+   "arm": "control",
+   "frozen_prompt_sha256": "08dd4bc24fe4dbf55c6588fd324e00b1abcc2812fe2086f9014afff2a12916d5",
+   "prompt_file_sha256": "10bd9579d845a96a74849e6ec64888756ea0e42997a41c4830b34d54fbccb2a0"
+  },
+  {
+   "position": 15,
+   "run_id": "q_207f12ab",
+   "scenario": "s02-ambiguous-cause",
+   "arm": "treatment",
+   "frozen_prompt_sha256": "4e4edddcc8011616efe448d4e04605ee0f14a4d220e4528ed20ae918bb305365",
+   "prompt_file_sha256": "74b5141b593fe1f340ba6510cbf971644aa8aefe031df4f25a35583d25b5eff6"
+  },
+  {
+   "position": 16,
+   "run_id": "q_343dc587",
+   "scenario": "s02-ambiguous-cause",
+   "arm": "control",
+   "frozen_prompt_sha256": "de820efa1dd82cace6ddc3ac0e675b276befc2549574e5ea23e594803ea7ebc7",
+   "prompt_file_sha256": "808365cf8d139bb67db0ac7f5cbdc9b0144cf3b3161e639630f3d9b53027945b"
+  },
+  {
+   "position": 17,
+   "run_id": "q_5fd9e21a",
+   "scenario": "s08-suspicious-traffic",
+   "arm": "control",
+   "frozen_prompt_sha256": "fe04522710ae2283f0372a088b8e19b3a40ca004849e18ca0d16ca8f19f4c9f3",
+   "prompt_file_sha256": "a2b13aaddb79b53a43ca4edc22f2d04d6e3797c8e692eb4d2602bb4364d676f6"
+  },
+  {
+   "position": 18,
+   "run_id": "q_546f1302",
+   "scenario": "s08-suspicious-traffic",
+   "arm": "treatment",
+   "frozen_prompt_sha256": "d5a2fdce7e249b6fb274bb92485fcfb466554638bc1f6a93fa1f4e4eba3b8b77",
+   "prompt_file_sha256": "c6ee17b3454e75f11f40f34c17d6315d1196139b86bbd26ce1847b1112488610"
+  },
+  {
+   "position": 19,
+   "run_id": "q_22eb58d7",
+   "scenario": "s06-regional-config",
+   "arm": "control",
+   "frozen_prompt_sha256": "d009993e89b31ad53f48b564d7749ccc6ec1af96dc459a1cbf5f24d0981c51c7",
+   "prompt_file_sha256": "20bb26ff51dcd6255909770fa5bcb083a6587df79ef8e5b18496df7b4dd98f4b"
+  },
+  {
+   "position": 20,
+   "run_id": "q_caa723b1",
+   "scenario": "s06-regional-config",
+   "arm": "treatment",
+   "frozen_prompt_sha256": "821b80ed0bdcd2c687418c919f5948f8ebc21d731be55626eecdf2c688c1bc81",
+   "prompt_file_sha256": "0654fd6d334623bc94da509eddeca4221047bb65874e11ff2d4699e34c78b22e"
+  }
+ ],
+ "judges": [
+  {
+   "judge_id": "j_89828c66",
+   "run_id": "q_bd257cc8",
+   "judge": "A",
+   "position": 1
+  },
+  {
+   "judge_id": "j_f1993027",
+   "run_id": "q_bcc9be4e",
+   "judge": "B",
+   "position": 2
+  },
+  {
+   "judge_id": "j_ad25a588",
+   "run_id": "q_343dc587",
+   "judge": "A",
+   "position": 3
+  },
+  {
+   "judge_id": "j_f2e559c3",
+   "run_id": "q_22eb58d7",
+   "judge": "B",
+   "position": 4
+  },
+  {
+   "judge_id": "j_aea2fa2a",
+   "run_id": "q_09ded1e1",
+   "judge": "B",
+   "position": 5
+  },
+  {
+   "judge_id": "j_2c83a3b0",
+   "run_id": "q_5fd9e21a",
+   "judge": "B",
+   "position": 6
+  },
+  {
+   "judge_id": "j_b68fd00b",
+   "run_id": "q_207f12ab",
+   "judge": "A",
+   "position": 7
+  },
+  {
+   "judge_id": "j_aa25af0e",
+   "run_id": "q_9b4e0c6c",
+   "judge": "B",
+   "position": 8
+  },
+  {
+   "judge_id": "j_c62713e0",
+   "run_id": "q_ccc65278",
+   "judge": "B",
+   "position": 9
+  },
+  {
+   "judge_id": "j_2a2716d5",
+   "run_id": "q_546f1302",
+   "judge": "A",
+   "position": 10
+  },
+  {
+   "judge_id": "j_8ef3e7ef",
+   "run_id": "q_cb6aa694",
+   "judge": "B",
+   "position": 11
+  },
+  {
+   "judge_id": "j_75da3e46",
+   "run_id": "q_edc17c27",
+   "judge": "A",
+   "position": 12
+  },
+  {
+   "judge_id": "j_1595260f",
+   "run_id": "q_caa723b1",
+   "judge": "A",
+   "position": 13
+  },
+  {
+   "judge_id": "j_561bdc94",
+   "run_id": "q_9b4e0c6c",
+   "judge": "A",
+   "position": 14
+  },
+  {
+   "judge_id": "j_11ea02f0",
+   "run_id": "q_343dc587",
+   "judge": "B",
+   "position": 15
+  },
+  {
+   "judge_id": "j_60e5a468",
+   "run_id": "q_21917cc2",
+   "judge": "A",
+   "position": 16
+  },
+  {
+   "judge_id": "j_fca36ce5",
+   "run_id": "q_bd257cc8",
+   "judge": "B",
+   "position": 17
+  },
+  {
+   "judge_id": "j_beddcdb2",
+   "run_id": "q_cb6aa694",
+   "judge": "A",
+   "position": 18
+  },
+  {
+   "judge_id": "j_e5b6f8f8",
+   "run_id": "q_5fd9e21a",
+   "judge": "A",
+   "position": 19
+  },
+  {
+   "judge_id": "j_a830084d",
+   "run_id": "q_b3a107d9",
+   "judge": "A",
+   "position": 20
+  },
+  {
+   "judge_id": "j_c8031134",
+   "run_id": "q_09ded1e1",
+   "judge": "A",
+   "position": 21
+  },
+  {
+   "judge_id": "j_4ab2c939",
+   "run_id": "q_e4633b28",
+   "judge": "B",
+   "position": 22
+  },
+  {
+   "judge_id": "j_0b112bc6",
+   "run_id": "q_edc17c27",
+   "judge": "B",
+   "position": 23
+  },
+  {
+   "judge_id": "j_31ae62b0",
+   "run_id": "q_22eb58d7",
+   "judge": "A",
+   "position": 24
+  },
+  {
+   "judge_id": "j_553a4a13",
+   "run_id": "q_66186003",
+   "judge": "A",
+   "position": 25
+  },
+  {
+   "judge_id": "j_d0d5cc4f",
+   "run_id": "q_207f12ab",
+   "judge": "B",
+   "position": 26
+  },
+  {
+   "judge_id": "j_62f99838",
+   "run_id": "q_546f1302",
+   "judge": "B",
+   "position": 27
+  },
+  {
+   "judge_id": "j_b5fbec86",
+   "run_id": "q_23a5c30d",
+   "judge": "A",
+   "position": 28
+  },
+  {
+   "judge_id": "j_5b90c464",
+   "run_id": "q_ccc65278",
+   "judge": "A",
+   "position": 29
+  },
+  {
+   "judge_id": "j_d18d88e5",
+   "run_id": "q_bcc9be4e",
+   "judge": "A",
+   "position": 30
+  },
+  {
+   "judge_id": "j_9bc2e429",
+   "run_id": "q_66186003",
+   "judge": "B",
+   "position": 31
+  },
+  {
+   "judge_id": "j_2d4e75b4",
+   "run_id": "q_602c7453",
+   "judge": "B",
+   "position": 32
+  },
+  {
+   "judge_id": "j_08ba4247",
+   "run_id": "q_515473fa",
+   "judge": "B",
+   "position": 33
+  },
+  {
+   "judge_id": "j_61c975e2",
+   "run_id": "q_23a5c30d",
+   "judge": "B",
+   "position": 34
+  },
+  {
+   "judge_id": "j_c77b89aa",
+   "run_id": "q_515473fa",
+   "judge": "A",
+   "position": 35
+  },
+  {
+   "judge_id": "j_6a34d0a0",
+   "run_id": "q_21917cc2",
+   "judge": "B",
+   "position": 36
+  },
+  {
+   "judge_id": "j_f72a677f",
+   "run_id": "q_b3a107d9",
+   "judge": "B",
+   "position": 37
+  },
+  {
+   "judge_id": "j_eaab47f0",
+   "run_id": "q_e4633b28",
+   "judge": "A",
+   "position": 38
+  },
+  {
+   "judge_id": "j_6a26e2a1",
+   "run_id": "q_602c7453",
+   "judge": "A",
+   "position": 39
+  },
+  {
+   "judge_id": "j_5292be3e",
+   "run_id": "q_caa723b1",
+   "judge": "B",
+   "position": 40
+  }
+ ]
+}

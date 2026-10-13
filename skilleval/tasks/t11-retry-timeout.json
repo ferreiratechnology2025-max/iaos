@@ -1,0 +1,33 @@
+{
+ "id": "t11-retry-timeout",
+ "kind": "feature",
+ "prompt": "The `retry` decorator (retry.py) should also retry on `TimeoutError` by default (today only `ConnectionError`). An explicit `exceptions=` argument must keep overriding the default.",
+ "files": {
+  "retry.py": "import time\n\n\ndef retry(times=3, exceptions=(ConnectionError,), delay=0):\n    def deco(fn):\n        def wrapper(*args, **kwargs):\n            last = None\n            for i in range(times):\n                try:\n                    return fn(*args, **kwargs)\n                except exceptions as e:\n                    last = e\n                    time.sleep(delay)\n            raise last\n        return wrapper\n    return deco\n",
+  "tests/test_retry.py": "from retry import retry\n\n\ndef test_retries_connection_error():\n    calls = []\n\n    @retry(times=3)\n    def f():\n        calls.append(1)\n        if len(calls) < 3:\n            raise ConnectionError()\n        return \"ok\"\n\n    assert f() == \"ok\" and len(calls) == 3\n"
+ },
+ "hidden_tests": {
+  "test_hidden.py": "import pytest\n\nfrom retry import retry\n\n\ndef _flaky(exc, fail_times):\n    state = {\"n\": 0}\n\n    def f():\n        state[\"n\"] += 1\n        if state[\"n\"] <= fail_times:\n            raise exc()\n        return \"ok\"\n\n    return f, state\n\n\ndef test_req_timeout_is_retried_by_default():\n    f, state = _flaky(TimeoutError, 2)\n    assert retry(times=3)(f)() == \"ok\" and state[\"n\"] == 3\n\n\ndef test_reg_connection_error_still_retried():\n    f, state = _flaky(ConnectionError, 1)\n    assert retry(times=3)(f)() == \"ok\" and state[\"n\"] == 2\n\n\ndef test_reg_other_errors_not_retried():\n    f, state = _flaky(ValueError, 1)\n    with pytest.raises(ValueError):\n        retry(times=3)(f)()\n    assert state[\"n\"] == 1\n\n\ndef test_reg_explicit_exceptions_override():\n    f, state = _flaky(TimeoutError, 1)\n    with pytest.raises(TimeoutError):\n        retry(times=3, exceptions=(KeyError,))(f)()\n    assert state[\"n\"] == 1\n"
+ },
+ "requirement_tests": {
+  "test_hidden.py": [
+   "test_req_timeout_is_retried_by_default"
+  ]
+ },
+ "regression_tests": {
+  "test_hidden.py": [
+   "test_reg_connection_error_still_retried",
+   "test_reg_other_errors_not_retried",
+   "test_reg_explicit_exceptions_override"
+  ]
+ },
+ "allowed": [
+  "retry.py::retry"
+ ],
+ "reference_files": {
+  "retry.py": "import time\n\n\ndef retry(times=3, exceptions=(ConnectionError, TimeoutError), delay=0):\n    def deco(fn):\n        def wrapper(*args, **kwargs):\n            last = None\n            for i in range(times):\n                try:\n                    return fn(*args, **kwargs)\n                except exceptions as e:\n                    last = e\n                    time.sleep(delay)\n            raise last\n        return wrapper\n    return deco\n"
+ },
+ "visible_tests": [
+  "tests/test_retry.py::test_retries_connection_error"
+ ]
+}

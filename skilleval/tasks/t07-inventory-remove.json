@@ -1,0 +1,33 @@
+{
+ "id": "t07-inventory-remove",
+ "kind": "feature",
+ "prompt": "Add a `remove(self, name, qty)` method to `Inventory` (inventory.py). It subtracts `qty` from the stock of `name`. If `qty` is greater than the current stock (or the item is unknown) it raises `ValueError(\"insufficient stock\")` and leaves the stock unchanged.",
+ "files": {
+  "inventory.py": "class Inventory:\n    def __init__(self):\n        self.items = {}\n\n    def add(self, name, qty):\n        if name in self.items:\n            self.items[name] = self.items[name] + qty\n        else:\n            self.items[name] = qty\n\n    def count(self, name):\n        if name in self.items:\n            return self.items[name]\n        else:\n            return 0\n",
+  "tests/test_inventory.py": "from inventory import Inventory\n\n\ndef test_add_and_count():\n    inv = Inventory()\n    inv.add(\"a\", 2)\n    inv.add(\"a\", 3)\n    assert inv.count(\"a\") == 5 and inv.count(\"zzz\") == 0\n"
+ },
+ "hidden_tests": {
+  "test_hidden.py": "import pytest\n\nfrom inventory import Inventory\n\n\ndef test_req_remove_subtracts():\n    inv = Inventory()\n    inv.add(\"a\", 5)\n    inv.remove(\"a\", 2)\n    assert inv.count(\"a\") == 3\n\n\ndef test_req_insufficient_raises_and_keeps_stock():\n    inv = Inventory()\n    inv.add(\"a\", 1)\n    with pytest.raises(ValueError, match=\"insufficient stock\"):\n        inv.remove(\"a\", 2)\n    assert inv.count(\"a\") == 1\n\n\ndef test_req_unknown_item_raises():\n    with pytest.raises(ValueError, match=\"insufficient stock\"):\n        Inventory().remove(\"nope\", 1)\n\n\ndef test_reg_add_unchanged():\n    inv = Inventory()\n    inv.add(\"a\", 0)\n    assert inv.items == {\"a\": 0}\n"
+ },
+ "requirement_tests": {
+  "test_hidden.py": [
+   "test_req_remove_subtracts",
+   "test_req_insufficient_raises_and_keeps_stock",
+   "test_req_unknown_item_raises"
+  ]
+ },
+ "regression_tests": {
+  "test_hidden.py": [
+   "test_reg_add_unchanged"
+  ]
+ },
+ "allowed": [
+  "inventory.py::Inventory.remove"
+ ],
+ "reference_files": {
+  "inventory.py": "class Inventory:\n    def __init__(self):\n        self.items = {}\n\n    def add(self, name, qty):\n        if name in self.items:\n            self.items[name] = self.items[name] + qty\n        else:\n            self.items[name] = qty\n\n    def count(self, name):\n        if name in self.items:\n            return self.items[name]\n        else:\n            return 0\n\n    def remove(self, name, qty):\n        if qty > self.count(name):\n            raise ValueError(\"insufficient stock\")\n        self.items[name] -= qty\n"
+ },
+ "visible_tests": [
+  "tests/test_inventory.py::test_add_and_count"
+ ]
+}

@@ -1,0 +1,28 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.venv-win/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Runtime state and generated execution evidence
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+*.jsonl
+*.log
+coverage/
+htmlcov/
+docs/evidence/*
+!docs/evidence/.gitkeep
+skilleval/*_run/
+skilleval/incident_response/*_run/
+skilleval/*/runs.json
+skilleval/*/results.json

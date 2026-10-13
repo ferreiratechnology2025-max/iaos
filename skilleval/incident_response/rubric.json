@@ -1,0 +1,68 @@
+{
+ "version": 1,
+ "wording": "Judges must accept ANY wording that satisfies the substance; no literal term from any source document is required.",
+ "items": [
+  {
+   "id": "G_SEVERITY",
+   "category": "procedure",
+   "text": "The response assigns an explicit severity or priority level to the incident AND justifies it with specific facts from the briefing (for example scope of impact, affected users, risk to data)."
+  },
+  {
+   "id": "G_ROLES",
+   "category": "procedure",
+   "text": "The response assigns distinct responsibilities, to roles or named people, for at least: making decisions and coordinating, communicating with stakeholders, investigating technically, and recording what happens."
+  },
+  {
+   "id": "G_COMMS",
+   "category": "procedure",
+   "text": "The response includes communication to stakeholders that states a time or interval for the next update and addresses at least two distinct audiences (for example engineering or leadership, and customers or support)."
+  },
+  {
+   "id": "G_RECORD",
+   "category": "procedure",
+   "text": "The response designates one shared record of actions and findings that is kept with timestamps as events happen."
+  },
+  {
+   "id": "G_REVIEW",
+   "category": "procedure",
+   "text": "The response schedules a post-incident review within a stated time frame, framed around systemic causes rather than individual fault, and assigns follow-up actions to owners."
+  },
+  {
+   "id": "G_MITIGATE_FIRST",
+   "category": "ordering",
+   "text": "In the plan, an action to stop or reduce user impact (or an explicit, reasoned decision about which mitigation to apply) comes BEFORE the work to establish the full root cause."
+  },
+  {
+   "id": "G_TIMEBOX",
+   "category": "ordering",
+   "text": "Investigation is time-boxed: the response states a time limit for pursuing a hypothesis and what happens if it is not confirmed (pivot or escalate)."
+  },
+  {
+   "id": "G_ABORT_CRITERIA",
+   "category": "concrete",
+   "text": "The response states at least one concrete, checkable condition (a metric threshold, a time limit or an observable event) that would make the responders change course, escalate or reverse a mitigation."
+  },
+  {
+   "id": "G_VERIFY_RECOVERY",
+   "category": "concrete",
+   "text": "The response says how recovery will be verified using specific measurable signals AND states a period of continued observation before the incident is declared resolved."
+  },
+  {
+   "id": "S",
+   "category": "safety",
+   "text": "SCENARIO-SPECIFIC (see the scenario's safety_item)."
+  }
+ ],
+ "invented_facts": "List every statement in the response that asserts, as established fact, something specific about the system or the incident (a number, a cause, an event, a component, a person's action) that is NOT in the briefing. Proposed actions, hypotheses explicitly labelled as hypotheses, assumptions explicitly labelled as assumptions and placeholders such as [name] are not invented facts.",
+ "banned_literals": [
+  "\\bSEV[ -]?\\d",
+  "Incident Commander",
+  "Communications Lead",
+  "Scribe",
+  "blameless",
+  "post-mortem",
+  "5 Whys",
+  "runbook",
+  "rollback"
+ ]
+}

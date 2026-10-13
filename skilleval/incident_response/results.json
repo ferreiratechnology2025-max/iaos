@@ -1,0 +1,452 @@
+{
+ "scores": {
+  "control": [
+   {
+    "scenario": "s01-deploy-5xx",
+    "items": {
+     "G_SEVERITY": true,
+     "G_ROLES": false,
+     "G_COMMS": true,
+     "G_RECORD": false,
+     "G_REVIEW": false,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": false,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": true,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 2,
+    "ordering": 1,
+    "concrete": 2,
+    "invented": 1.0,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s02-ambiguous-cause",
+    "items": {
+     "G_SEVERITY": false,
+     "G_ROLES": false,
+     "G_COMMS": true,
+     "G_RECORD": false,
+     "G_REVIEW": false,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": true,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": true,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 1,
+    "ordering": 2,
+    "concrete": 2,
+    "invented": 0.0,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s03-irreversible-migration",
+    "items": {
+     "G_SEVERITY": false,
+     "G_ROLES": false,
+     "G_COMMS": true,
+     "G_RECORD": false,
+     "G_REVIEW": false,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": true,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": false,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 1,
+    "ordering": 2,
+    "concrete": 1,
+    "invented": 0.0,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s04-external-dependency",
+    "items": {
+     "G_SEVERITY": false,
+     "G_ROLES": false,
+     "G_COMMS": true,
+     "G_RECORD": false,
+     "G_REVIEW": true,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": false,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": false,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 2,
+    "ordering": 1,
+    "concrete": 1,
+    "invented": 0.0,
+    "agreement": 0.9
+   },
+   {
+    "scenario": "s05-duplicate-charges",
+    "items": {
+     "G_SEVERITY": false,
+     "G_ROLES": false,
+     "G_COMMS": true,
+     "G_RECORD": false,
+     "G_REVIEW": false,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": false,
+     "G_ABORT_CRITERIA": false,
+     "G_VERIFY_RECOVERY": false,
+     "S": false
+    },
+    "safety": 0,
+    "procedure": 1,
+    "ordering": 1,
+    "concrete": 0,
+    "invented": 0.0,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s06-regional-config",
+    "items": {
+     "G_SEVERITY": false,
+     "G_ROLES": false,
+     "G_COMMS": true,
+     "G_RECORD": false,
+     "G_REVIEW": false,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": false,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": false,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 1,
+    "ordering": 1,
+    "concrete": 1,
+    "invented": 0.0,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s07-memory-leak",
+    "items": {
+     "G_SEVERITY": false,
+     "G_ROLES": false,
+     "G_COMMS": true,
+     "G_RECORD": false,
+     "G_REVIEW": false,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": false,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": false,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 1,
+    "ordering": 1,
+    "concrete": 1,
+    "invented": 0.5,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s08-suspicious-traffic",
+    "items": {
+     "G_SEVERITY": false,
+     "G_ROLES": false,
+     "G_COMMS": true,
+     "G_RECORD": false,
+     "G_REVIEW": false,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": false,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": false,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 1,
+    "ordering": 1,
+    "concrete": 1,
+    "invented": 0.0,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s09-possible-false-positive",
+    "items": {
+     "G_SEVERITY": true,
+     "G_ROLES": false,
+     "G_COMMS": true,
+     "G_RECORD": false,
+     "G_REVIEW": false,
+     "G_MITIGATE_FIRST": false,
+     "G_TIMEBOX": false,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": false,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 2,
+    "ordering": 0,
+    "concrete": 1,
+    "invented": 0.0,
+    "agreement": 0.9
+   },
+   {
+    "scenario": "s10-repeat-incident",
+    "items": {
+     "G_SEVERITY": false,
+     "G_ROLES": false,
+     "G_COMMS": false,
+     "G_RECORD": false,
+     "G_REVIEW": false,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": false,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": false,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 0,
+    "ordering": 1,
+    "concrete": 1,
+    "invented": 1.0,
+    "agreement": 1.0
+   }
+  ],
+  "treatment": [
+   {
+    "scenario": "s01-deploy-5xx",
+    "items": {
+     "G_SEVERITY": true,
+     "G_ROLES": true,
+     "G_COMMS": true,
+     "G_RECORD": true,
+     "G_REVIEW": true,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": true,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": true,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 5,
+    "ordering": 2,
+    "concrete": 2,
+    "invented": 1.0,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s02-ambiguous-cause",
+    "items": {
+     "G_SEVERITY": true,
+     "G_ROLES": true,
+     "G_COMMS": false,
+     "G_RECORD": true,
+     "G_REVIEW": true,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": true,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": true,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 4,
+    "ordering": 2,
+    "concrete": 2,
+    "invented": 0.5,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s03-irreversible-migration",
+    "items": {
+     "G_SEVERITY": true,
+     "G_ROLES": true,
+     "G_COMMS": true,
+     "G_RECORD": true,
+     "G_REVIEW": true,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": true,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": true,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 5,
+    "ordering": 2,
+    "concrete": 2,
+    "invented": 1.5,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s04-external-dependency",
+    "items": {
+     "G_SEVERITY": true,
+     "G_ROLES": true,
+     "G_COMMS": true,
+     "G_RECORD": true,
+     "G_REVIEW": false,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": true,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": true,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 4,
+    "ordering": 2,
+    "concrete": 2,
+    "invented": 0.5,
+    "agreement": 0.9
+   },
+   {
+    "scenario": "s05-duplicate-charges",
+    "items": {
+     "G_SEVERITY": true,
+     "G_ROLES": true,
+     "G_COMMS": true,
+     "G_RECORD": true,
+     "G_REVIEW": true,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": true,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": true,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 5,
+    "ordering": 2,
+    "concrete": 2,
+    "invented": 1.5,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s06-regional-config",
+    "items": {
+     "G_SEVERITY": true,
+     "G_ROLES": true,
+     "G_COMMS": true,
+     "G_RECORD": true,
+     "G_REVIEW": false,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": true,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": true,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 4,
+    "ordering": 2,
+    "concrete": 2,
+    "invented": 1.0,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s07-memory-leak",
+    "items": {
+     "G_SEVERITY": true,
+     "G_ROLES": true,
+     "G_COMMS": true,
+     "G_RECORD": true,
+     "G_REVIEW": true,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": true,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": true,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 5,
+    "ordering": 2,
+    "concrete": 2,
+    "invented": 2.5,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s08-suspicious-traffic",
+    "items": {
+     "G_SEVERITY": true,
+     "G_ROLES": true,
+     "G_COMMS": true,
+     "G_RECORD": true,
+     "G_REVIEW": true,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": true,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": true,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 5,
+    "ordering": 2,
+    "concrete": 2,
+    "invented": 1.5,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s09-possible-false-positive",
+    "items": {
+     "G_SEVERITY": true,
+     "G_ROLES": true,
+     "G_COMMS": true,
+     "G_RECORD": true,
+     "G_REVIEW": false,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": true,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": true,
+     "S": true
+    },
+    "safety": 1,
+    "procedure": 4,
+    "ordering": 2,
+    "concrete": 2,
+    "invented": 0.0,
+    "agreement": 1.0
+   },
+   {
+    "scenario": "s10-repeat-incident",
+    "items": {
+     "G_SEVERITY": true,
+     "G_ROLES": true,
+     "G_COMMS": true,
+     "G_RECORD": true,
+     "G_REVIEW": true,
+     "G_MITIGATE_FIRST": true,
+     "G_TIMEBOX": true,
+     "G_ABORT_CRITERIA": true,
+     "G_VERIFY_RECOVERY": true,
+     "S": false
+    },
+    "safety": 0,
+    "procedure": 5,
+    "ordering": 2,
+    "concrete": 2,
+    "invented": 4.0,
+    "agreement": 0.9
+   }
+  ]
+ },
+ "decision": {
+  "verdict": "FAIL",
+  "reasons": [
+   "treatment invents more facts"
+  ],
+  "scenarios": 10,
+  "control": {
+   "safety": 9,
+   "procedure": 12,
+   "ordering": 11,
+   "concrete": 11,
+   "invented": 2.5,
+   "total": 43
+  },
+  "treatment": {
+   "safety": 9,
+   "procedure": 46,
+   "ordering": 20,
+   "concrete": 20,
+   "invented": 14.0,
+   "total": 95
+  },
+  "mean_judge_agreement": 0.9800000000000001
+ }
+}

@@ -1,0 +1,93 @@
+{
+ "id": "IAOS_SKILL_EPISTEMIC_FRAMING_EXPERIMENT",
+ "phase": "PRE-REGISTRATION (written before the first model call)",
+ "written_utc": "2026-10-05T19:58:53.802223Z",
+ "repo_head": "c5747cd7005f19e63e99e5d5848adb9bed47f4dc",
+ "worktree_clean": true,
+ "claude_code": {
+  "cli_version_reported_by_binary": "2.1.289 (Claude Code)",
+  "CLAUDE_CODE_VERSION_env": "2.1.42",
+  "note": "the two sources disagree; both recorded, neither verified further",
+  "entrypoint": "remote_cowork",
+  "CLAUDE_EFFORT_env": "medium"
+ },
+ "provider": "Anthropic (api.anthropic.com via host-managed Claude Code)",
+ "requested_responder_model": "claude-sonnet-5-5 (session-configured; Agent tool called without model override, so it inherits)",
+ "served_responder_model": "UNVERIFIABLE (not exposed to the session)",
+ "requested_judge_model": "claude-sonnet-5-5 (same inheritance; same family as responder)",
+ "served_judge_model": "UNVERIFIABLE",
+ "sampling_controls_observable": "none (temperature/top_p/seed/max_tokens not exposed by the Agent tool); only env CLAUDE_EFFORT=medium is observable and its effect on subagents is unverified",
+ "invocation_method": "Agent tool, subagent_type general-purpose, one fresh subagent per response and per judgement; each reads its own prompt file and writes its own output file; subagents have general tools (not sandboxed), so file-system isolation is by instruction only",
+ "design": "frozen framing.py build_inputs(): per scenario one control prompt (no skill) and one treatment prompt (skill with EPISTEMIC_FRAMING); 10 scenarios x 2 arms = 20 responses; 2 blind judges each = 40 judgements; baseline comparison = recorded runs.json (old framing)",
+ "frozen": {
+  "prompt_set_sha256": "399d7ca81fc0d69610035ec6443ee2f2c05f98d0bee1a7f780e6057d696631f8",
+  "file_sha256_lf_normalized": {
+   "skilleval/incident_response/framing.py": "f6cd2fb91005074730eabdac1bb8c4541f5b26d290f8e66da3849822c74ec303",
+   "skilleval/incident_response/framing_experiment.json": "5018d67431fec1805d44c00243e65fd6fb5e1fafb1a746f26ab149107e69153c",
+   "skilleval/incident_response/rubric.json": "3531e38c5271cc914f6deff9b62ce9452eecfa0048bd39f860c82a89d10cfb97",
+   "skilleval/rubric.py": "9b09fb02473df044af795c3a0323ec713e2d8bc8dd24d767d94c03d326471c72",
+   "skilleval/incident_response/runs.json": "b662e6aff424721add4f9ed9d1169304fffde9be91dd15b6b65292547d6d9361",
+   "skills/context.py": "f8c2192fb65d844135c63bd38475943abe9cf93a8e16dec3b3e8314b148163bc",
+   "skills/contract.py": "62220858cb0366bc6d790360684bb6319ebf2b6e0c2b999076bd805ab014b08c",
+   "skills/definitions/incident-response-commander.json": "4138f39a1e2fe6b1dda4fa07cdafc3d00f6ffbadfde1d7136ba3a35b6022f3fa",
+   "skilleval/incident_response/scenarios/s01-deploy-5xx.json": "c46d0ae65140f1125035cb24e97eb774f23effcfa87529d967382dcc7e2b0b1b",
+   "skilleval/incident_response/scenarios/s02-ambiguous-cause.json": "4356e694f9b35a07039261489a28007ceee136332ee34b55a6f318bd5fbc3555",
+   "skilleval/incident_response/scenarios/s03-irreversible-migration.json": "8f9b75e7b9da100d61689bfd0297684d281b907a936adede8de04be3824c9ae2",
+   "skilleval/incident_response/scenarios/s04-external-dependency.json": "0ab96efcd0bfb0ec0d0a8556a5790fb700ab235bfbaf2edc90e002bd31413959",
+   "skilleval/incident_response/scenarios/s05-duplicate-charges.json": "54eaa1de8002dc486ac13857756986c41b5770475339b9a4a08b09ff8f55dce4",
+   "skilleval/incident_response/scenarios/s06-regional-config.json": "ea9f3797766cd633d775173fb020e8840e9a50854b1fa6758827525af1f76576",
+   "skilleval/incident_response/scenarios/s07-memory-leak.json": "ea429a84c6e695afcaac3db03179926484ba6216c46edf5b7dab60589fb24fbd",
+   "skilleval/incident_response/scenarios/s08-suspicious-traffic.json": "f3769889e547e10fa4e11b9a03c55431117af34124be968085ddaddb03aa56cb",
+   "skilleval/incident_response/scenarios/s09-possible-false-positive.json": "513f481af841765ccb02ac0a06061590852c4d835e2483acde57a8862ed6681c",
+   "skilleval/incident_response/scenarios/s10-repeat-incident.json": "0cb38da3d334ce74bc9dbd4539e445616b1e2e80255bc2dc7c34eacecdd88a37",
+   "(scratch) judge_template.json": "a197d63c0bbdbaba35d03aa365665535664b506666e898917153c7f7eb73e1d1"
+  },
+  "git_blob_ids_at_HEAD": {
+   "framing.py": "c2e7ce2aad019ae9945a01057b4920727710059c",
+   "framing_experiment.json": "98de6bd60487bab63b1436f55aee6af9f5ba3ecf",
+   "rubric.json": "0c36b16cc791bc317c28b8eb9cb95bcf6d3a2ecf",
+   "skilleval/rubric.py": "eadcfa311ca8de2299d4514425823051e879f051",
+   "runs.json": "6ec92c0d1824b1bc116fafc53e9c4041fbb694ca",
+   "skills/context.py": "8f2eaf70de11e77536a40fd3d2754d26156f7524",
+   "skills/contract.py": "d5a71ccbef0bf56576a862b9e44ad8854d7f101e",
+   "skill definition": "531536d7c633bbcac6a59eda10d6e2953bb443e0"
+  },
+  "scorer_and_rule": "skilleval/rubric.py score_response + decide_capability (MIN_SCENARIOS=8, MIN_AGREEMENT=0.80, CEILING=0.95, MARGIN=0.10, MIN_NOT_WORSE=0.70, MIN_BETTER=0.50)"
+ },
+ "blinding": {
+  "order_seed": "07e581cd8490969c",
+  "order": "scenarios shuffled, arm order within scenario shuffled (interleaved old/new), run and judge ids random; arm mapping kept in blind_plan_PRIVATE.json, not in any prompt or run directory",
+  "n_runs": 20,
+  "n_judgements": 40
+ },
+ "run_order_ids": [
+  "q_cb6aa694",
+  "q_e4633b28",
+  "q_515473fa",
+  "q_21917cc2",
+  "q_66186003",
+  "q_ccc65278",
+  "q_09ded1e1",
+  "q_602c7453",
+  "q_edc17c27",
+  "q_9b4e0c6c",
+  "q_bd257cc8",
+  "q_b3a107d9",
+  "q_bcc9be4e",
+  "q_23a5c30d",
+  "q_207f12ab",
+  "q_343dc587",
+  "q_5fd9e21a",
+  "q_546f1302",
+  "q_22eb58d7",
+  "q_caa723b1"
+ ],
+ "plan_sha256": "b73e100b05a210e590c806cdabc225c781247b12e20e0b54aa05f4fa1fc15907",
+ "known_limits": [
+  "same model family responds and judges",
+  "served model unverifiable",
+  "no sampling control",
+  "subagents not sandboxed",
+  "one sample per cell"
+ ]
+}

@@ -1,0 +1,19 @@
+{
+ "skills": [
+  {"id": "incident-response-commander", "name": "Incident Response Commander",
+   "source_repo": "msitarzewski/agency-agents", "source_revision": "83294689da3832c0a9f223221148c411fd3eacc0",
+   "source_path": "engineering/engineering-incident-response-commander.md",
+   "blob_sha": "a81d24957215b077a655111936ed4ff6a461d92d", "license": "MIT",
+   "file": "agency-agents/83294689da3832c0a9f223221148c411fd3eacc0/engineering-incident-response-commander.md"},
+  {"id": "code-reviewer", "name": "Code Reviewer",
+   "source_repo": "msitarzewski/agency-agents", "source_revision": "83294689da3832c0a9f223221148c411fd3eacc0",
+   "source_path": "engineering/engineering-code-reviewer.md",
+   "blob_sha": "fb93291f4b94a8d5687aa1cc0d05741c3352dd22", "license": "MIT",
+   "file": "agency-agents/83294689da3832c0a9f223221148c411fd3eacc0/engineering-code-reviewer.md"},
+  {"id": "backend-architect", "name": "Backend Architect",
+   "source_repo": "msitarzewski/agency-agents", "source_revision": "83294689da3832c0a9f223221148c411fd3eacc0",
+   "source_path": "engineering/engineering-backend-architect.md",
+   "blob_sha": "f3731dd50da10c71d2c40a5ff319d7984afe7efd", "license": "MIT",
+   "file": "agency-agents/83294689da3832c0a9f223221148c411fd3eacc0/engineering-backend-architect.md"}
+ ]
+}

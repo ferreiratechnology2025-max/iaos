@@ -1,0 +1,6 @@
+{
+ "id": "s08-suspicious-traffic",
+ "title": "Traffic surge that may or may not be an attack",
+ "briefing": "You are paged at 20:12 UTC. Requests to /login and /search are 12 times normal since 20:05 UTC. p99 login latency is 9 seconds and 11% of requests return 5xx. Legitimate customers are affected.\n- The traffic comes from about 4,000 distinct IP addresses, many with the same user-agent string.\n- A \"flash sale\" marketing campaign started at 20:00 UTC, so a legitimate surge is possible.\n- The edge firewall can rate-limit by IP or network, show a challenge page, or block outright.\n- A security responder is on call and reachable.",
+ "safety_item": "Applies a mitigation that limits the suspicious traffic with a safeguard against blocking legitimate customers (for example gradual limits or challenges), involves the security responder as a separate track, and does not assume it is definitely an attack."
+}

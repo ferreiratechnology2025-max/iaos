@@ -1,0 +1,33 @@
+{
+ "id": "t10-missing-settings-file",
+ "kind": "bugfix",
+ "prompt": "`load_settings(path)` (settings.py) raises FileNotFoundError when the file does not exist. Make it return a copy of `DEFAULTS` in that case.",
+ "files": {
+  "settings.py": "import json\n\nDEFAULTS = {\"theme\": \"light\", \"lang\": \"en\"}\n\n\ndef load_settings(path):\n    with open(path) as f:\n        data = json.load(f)\n    merged = dict(DEFAULTS)\n    merged.update(data)\n    return merged\n",
+  "tests/test_settings.py": "import json\n\nfrom settings import load_settings\n\n\ndef test_merges_over_defaults(tmp_path):\n    p = tmp_path / \"s.json\"\n    p.write_text(json.dumps({\"theme\": \"dark\"}))\n    assert load_settings(str(p)) == {\"theme\": \"dark\", \"lang\": \"en\"}\n"
+ },
+ "hidden_tests": {
+  "test_hidden.py": "import json\n\nimport pytest\n\nimport settings\nfrom settings import load_settings\n\n\ndef test_req_missing_file_returns_defaults(tmp_path):\n    assert load_settings(str(tmp_path / \"nope.json\")) == {\"theme\": \"light\", \"lang\": \"en\"}\n\n\ndef test_req_missing_file_returns_a_copy(tmp_path):\n    out = load_settings(str(tmp_path / \"nope.json\"))\n    out[\"theme\"] = \"x\"\n    assert settings.DEFAULTS[\"theme\"] == \"light\"\n\n\ndef test_reg_invalid_json_still_raises(tmp_path):\n    p = tmp_path / \"bad.json\"\n    p.write_text(\"{not json\")\n    with pytest.raises(ValueError):\n        load_settings(str(p))\n\n\ndef test_reg_override_still_works(tmp_path):\n    p = tmp_path / \"s.json\"\n    p.write_text(json.dumps({\"lang\": \"pt\"}))\n    assert load_settings(str(p))[\"lang\"] == \"pt\"\n"
+ },
+ "requirement_tests": {
+  "test_hidden.py": [
+   "test_req_missing_file_returns_defaults",
+   "test_req_missing_file_returns_a_copy"
+  ]
+ },
+ "regression_tests": {
+  "test_hidden.py": [
+   "test_reg_invalid_json_still_raises",
+   "test_reg_override_still_works"
+  ]
+ },
+ "allowed": [
+  "settings.py::load_settings"
+ ],
+ "reference_files": {
+  "settings.py": "import json\n\nDEFAULTS = {\"theme\": \"light\", \"lang\": \"en\"}\n\n\ndef load_settings(path):\n    try:\n        with open(path) as f:\n            data = json.load(f)\n    except FileNotFoundError:\n        return dict(DEFAULTS)\n    merged = dict(DEFAULTS)\n    merged.update(data)\n    return merged\n"
+ },
+ "visible_tests": [
+  "tests/test_settings.py::test_merges_over_defaults"
+ ]
+}

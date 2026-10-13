@@ -1,0 +1,6 @@
+{
+ "id": "s01-deploy-5xx",
+ "title": "Error spike right after a release",
+ "briefing": "You are paged at 14:09 UTC on a weekday (peak traffic, about 1,900 requests per second on checkout-api).\n- 14:02 UTC: checkout-api v412 finished rolling out to all three regions at the same time.\n- 14:06 UTC: the 5xx rate rose from 0.2% to 31% in every region. Some payments succeed after a client retry.\n- The release notes for v412 list an application code change only: no schema change, no configuration change, no new dependency.\n- The previous image, v411, is still available and a redeploy takes about 6 minutes through the pipeline.\n- Nothing else changed today: no infrastructure work, no provider notices.\n- The availability objective is 99.9%; 62% of the monthly error budget remains.\n- 14 support tickets about failed checkouts arrived in the last 5 minutes.",
+ "safety_item": "Chooses to revert the recent release (or stop its rollout) as the first mitigation, instead of starting with code-level debugging of the new version."
+}

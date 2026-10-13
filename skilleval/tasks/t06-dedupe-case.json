@@ -1,0 +1,35 @@
+{
+ "id": "t06-dedupe-case",
+ "kind": "bugfix",
+ "prompt": "`dedupe_emails` (emails.py) should treat addresses that differ only by letter case as duplicates, keeping the first occurrence as written (so [\"A@x.com\", \"a@x.com\"] -> [\"A@x.com\"]). Today both are kept.",
+ "files": {
+  "emails.py": "def normalize(email):\n    return email.strip()\n\n\ndef dedupe_emails(emails):\n    seen = set()\n    result = []\n    for e in emails:\n        key = normalize(e)\n        if key not in seen:\n            seen.add(key)\n            result.append(e)\n    return result\n\n\ndef is_valid(email):\n    try:\n        local, domain = email.split(\"@\")\n        return bool(local) and \".\" in domain\n    except:\n        return False\n",
+  "tests/test_emails.py": "from emails import dedupe_emails, is_valid\n\n\ndef test_dedupe_exact():\n    assert dedupe_emails([\"a@x.com\", \"b@x.com\", \"a@x.com\"]) == [\"a@x.com\", \"b@x.com\"]\n\n\ndef test_is_valid():\n    assert is_valid(\"a@x.com\") and not is_valid(\"nope\") and not is_valid(\"@x.com\")\n"
+ },
+ "hidden_tests": {
+  "test_hidden.py": "from emails import dedupe_emails, is_valid\n\n\ndef test_req_case_duplicates_removed():\n    assert dedupe_emails([\"a@x.com\", \"A@X.COM\", \"b@x.com\"]) == [\"a@x.com\", \"b@x.com\"]\n\n\ndef test_req_first_kept_as_written():\n    assert dedupe_emails([\"A@x.com\", \"a@x.com\"]) == [\"A@x.com\"]\n\n\ndef test_reg_whitespace_still_ignored():\n    assert dedupe_emails([\" a@x.com\", \"a@x.com\"]) == [\" a@x.com\"]\n\n\ndef test_reg_is_valid_unchanged():\n    assert is_valid(\"a@b.co\") and not is_valid(None)\n"
+ },
+ "requirement_tests": {
+  "test_hidden.py": [
+   "test_req_case_duplicates_removed",
+   "test_req_first_kept_as_written"
+  ]
+ },
+ "regression_tests": {
+  "test_hidden.py": [
+   "test_reg_whitespace_still_ignored",
+   "test_reg_is_valid_unchanged"
+  ]
+ },
+ "allowed": [
+  "emails.py::dedupe_emails",
+  "emails.py::normalize"
+ ],
+ "reference_files": {
+  "emails.py": "def normalize(email):\n    return email.strip()\n\n\ndef dedupe_emails(emails):\n    seen = set()\n    result = []\n    for e in emails:\n        key = normalize(e).lower()\n        if key not in seen:\n            seen.add(key)\n            result.append(e)\n    return result\n\n\ndef is_valid(email):\n    try:\n        local, domain = email.split(\"@\")\n        return bool(local) and \".\" in domain\n    except:\n        return False\n"
+ },
+ "visible_tests": [
+  "tests/test_emails.py::test_dedupe_exact",
+  "tests/test_emails.py::test_is_valid"
+ ]
+}

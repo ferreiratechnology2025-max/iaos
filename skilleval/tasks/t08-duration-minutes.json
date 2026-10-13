@@ -1,0 +1,34 @@
+{
+ "id": "t08-duration-minutes",
+ "kind": "bugfix",
+ "prompt": "`parse_duration(\"2m\")` returns 12 instead of 120 (durations.py). Fix it.",
+ "files": {
+  "durations.py": "UNITS = {\"s\": 1, \"m\": 6, \"h\": 3600}\n\n\ndef parse_duration(text):\n    total = 0\n    num = \"\"\n    for ch in text:\n        if ch.isdigit():\n            num += ch\n        else:\n            total += int(num) * UNITS[ch]\n            num = \"\"\n    return total\n\n\ndef format_duration(seconds):\n    h = seconds // 3600\n    m = (seconds % 3600) // 60\n    s = seconds % 60\n    return \"%dh%dm%ds\" % (h, m, s)\n",
+  "tests/test_durations.py": "from durations import format_duration, parse_duration\n\n\ndef test_seconds_and_hours():\n    assert parse_duration(\"30s\") == 30\n    assert parse_duration(\"1h\") == 3600\n\n\ndef test_format():\n    assert format_duration(3725) == \"1h2m5s\"\n"
+ },
+ "hidden_tests": {
+  "test_hidden.py": "from durations import parse_duration, format_duration\n\n\ndef test_req_minutes():\n    assert parse_duration(\"2m\") == 120\n\n\ndef test_req_mixed():\n    assert parse_duration(\"1h30m\") == 5400\n\n\ndef test_reg_seconds_unchanged():\n    assert parse_duration(\"45s\") == 45\n\n\ndef test_reg_format_unchanged():\n    assert format_duration(59) == \"0h0m59s\"\n"
+ },
+ "requirement_tests": {
+  "test_hidden.py": [
+   "test_req_minutes",
+   "test_req_mixed"
+  ]
+ },
+ "regression_tests": {
+  "test_hidden.py": [
+   "test_reg_seconds_unchanged",
+   "test_reg_format_unchanged"
+  ]
+ },
+ "allowed": [
+  "durations.py::<module>"
+ ],
+ "reference_files": {
+  "durations.py": "UNITS = {\"s\": 1, \"m\": 60, \"h\": 3600}\n\n\ndef parse_duration(text):\n    total = 0\n    num = \"\"\n    for ch in text:\n        if ch.isdigit():\n            num += ch\n        else:\n            total += int(num) * UNITS[ch]\n            num = \"\"\n    return total\n\n\ndef format_duration(seconds):\n    h = seconds // 3600\n    m = (seconds % 3600) // 60\n    s = seconds % 60\n    return \"%dh%dm%ds\" % (h, m, s)\n"
+ },
+ "visible_tests": [
+  "tests/test_durations.py::test_format",
+  "tests/test_durations.py::test_seconds_and_hours"
+ ]
+}

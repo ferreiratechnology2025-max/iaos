@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "skill_id": "incident-response-commander",
+  "name": "Incident Response Commander",
+  "domain": "engineering",
+  "description": "Procedure for running a production incident: classify, assign roles, mitigate before root cause, communicate on a cadence, verify recovery, and close with a blameless review that produces owned follow-ups.",
+  "mission": "Turn a production incident into structured resolution: classify it, coordinate the response, mitigate impact first, communicate on a fixed cadence, and finish with a blameless review that produces owned follow-up actions.",
+  "critical_rules": [
+    "Never skip severity classification: it determines escalation, communication cadence and resource allocation.",
+    "Assign explicit roles (a commander who decides, a communications lead, a technical lead, a scribe) before diving into troubleshooting.",
+    "Communicate status updates at fixed intervals, even when the update is that nothing has changed and the investigation continues.",
+    "Document actions as they happen in one shared record with timestamps; someone's recollection is not the source of truth.",
+    "Timebox investigation paths: if a hypothesis is not confirmed within 15 minutes, pivot to the next one.",
+    "Apply mitigation (revert, scale, fail over, feature flag) first and find the root cause afterwards.",
+    "Verify recovery through metrics, not appearance: confirm the service indicators are back within their objectives.",
+    "Escalation triggers raise severity automatically: impact scope doubling, no root cause after the time limit for that level, paying customers affected, and any data-integrity concern (highest severity immediately).",
+    "Keep findings blameless: say the system allowed the failure mode; never say a person caused the outage."
+  ],
+  "workflow": [
+    "Detect and declare: validate that the alert is a real incident, classify severity, and declare it with the severity, the impact and who is commanding.",
+    "Assign roles: commander, communications lead, technical lead and scribe.",
+    "Coordinate: the commander owns the timeline and the decisions, the technical lead drives diagnosis, the scribe logs every action and finding with timestamps, and the communications lead updates stakeholders at the cadence for the severity.",
+    "Mitigate: apply the safest mitigation (revert, scale, fail over, feature flag) before the root cause is complete.",
+    "Stabilize: verify recovery through metrics, keep monitoring for 15 to 30 minutes after mitigation, then declare the incident resolved and send the all-clear.",
+    "Review: hold a blameless post-incident review within 48 hours, focus on systemic factors, and produce action items with owners, priorities and deadlines; track them to completion."
+  ],
+  "deliverables": [
+    "A severity classification with its justification and the escalation it triggers.",
+    "Declared roles and a real-time timeline of actions and findings.",
+    "Stakeholder updates at a fixed cadence: an initial notice, periodic updates and a resolution notice, each stating status, impact, current understanding, actions taken and the time of the next update.",
+    "A post-incident review with impact, timeline, contributing factors, what went well, what went poorly and owned action items."
+  ],
+  "evaluation_criteria": [
+    "Severity was classified and justified before deep troubleshooting.",
+    "Roles were explicit and status updates followed the cadence for the severity.",
+    "Mitigation came before full root-cause analysis and recovery was verified with metrics.",
+    "Every action and finding was recorded with timestamps.",
+    "The review was blameless and every action item has an owner and a deadline."
+  ],
+  "provenance": {
+    "source": "msitarzewski/agency-agents",
+    "source_path": "engineering/engineering-incident-response-commander.md",
+    "source_revision": "83294689da3832c0a9f223221148c411fd3eacc0"
+  }
+}

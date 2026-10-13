@@ -1,0 +1,35 @@
+{
+ "id": "t09-default-timeout",
+ "kind": "config",
+ "prompt": "Change the default request timeout from 30 to 60 seconds.",
+ "files": {
+  "config.py": "DEFAULT_TIMEOUT = 30\nRETRY_BACKOFF = 30\nMAX_RETRIES = 3\n",
+  "client.py": "from config import DEFAULT_TIMEOUT, MAX_RETRIES\n\n\nclass Client:\n    def __init__(self, timeout=DEFAULT_TIMEOUT):\n        self.timeout = timeout\n        self.retries = MAX_RETRIES\n",
+  "tests/test_client.py": "from client import Client\n\n\ndef test_custom_timeout():\n    assert Client(timeout=5).timeout == 5\n\n\ndef test_retries():\n    assert Client().retries == 3\n"
+ },
+ "hidden_tests": {
+  "test_hidden.py": "import config\nfrom client import Client\n\n\ndef test_req_default_constant():\n    assert config.DEFAULT_TIMEOUT == 60\n\n\ndef test_req_client_default():\n    assert Client().timeout == 60\n\n\ndef test_reg_backoff_unchanged():\n    assert config.RETRY_BACKOFF == 30\n\n\ndef test_reg_retries_unchanged():\n    assert config.MAX_RETRIES == 3\n"
+ },
+ "requirement_tests": {
+  "test_hidden.py": [
+   "test_req_default_constant",
+   "test_req_client_default"
+  ]
+ },
+ "regression_tests": {
+  "test_hidden.py": [
+   "test_reg_backoff_unchanged",
+   "test_reg_retries_unchanged"
+  ]
+ },
+ "allowed": [
+  "config.py::<module>"
+ ],
+ "reference_files": {
+  "config.py": "DEFAULT_TIMEOUT = 60\nRETRY_BACKOFF = 30\nMAX_RETRIES = 3\n"
+ },
+ "visible_tests": [
+  "tests/test_client.py::test_custom_timeout",
+  "tests/test_client.py::test_retries"
+ ]
+}
